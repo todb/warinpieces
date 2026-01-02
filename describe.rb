@@ -28,20 +28,11 @@ if File.exist?(READER_FILE)
 end
 
 TEMPLATE = <<~DESC
-  War and Peace by Leo Tolstoy (Russian: Война и мир, Лев Николаевич Толстой),
-  translated by Constance Garnett in 1930,
-  read usually by Tod Beardsley, who started in #{START_YEAR}.
+  Part %{part}, Chapter %{chapter}, Sentence %{sentence}. War and Peace by Leo Tolstoy (Russian: Война и мир, Лев Николаевич Толстой), translated by Constance Garnett in 1930, read usually by Tod Beardsley, who started in #{START_YEAR}.
 
-  Part %{part}, Chapter %{chapter}, Sentence %{sentence}.
+  This is Episode %{episode_id} of War in Pieces, a daily podcast reading Leo Tolstoy’s War and Peace one sentence at a time, using the public-domain Constance Garnett translation. This episode was read by %{reader}.
 
-  This is Episode %{episode_id} of War in Pieces, a daily podcast reading
-  Leo Tolstoy’s War and Peace one sentence at a time, using the public-domain
-  Constance Garnett translation. This episode was read by %{reader}.
-
-  War and Peace is a novel by Leo Tolstoy, first published as a complete
-  work in 1869, and widely regarded as one of the greatest works of world
-  literature. This recording is read by %{reader} as part of a long-term
-  audio project releasing one sentence per day.
+  War and Peace is a novel by Leo Tolstoy, first published as a complete work in 1869, and widely regarded as one of the greatest works of world literature. This recording is read by %{reader} as part of a long-term audio project releasing one sentence per day.
 
   For more information, visit #{WEBSITE}
 DESC

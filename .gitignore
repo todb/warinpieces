@@ -58,3 +58,4 @@ build-iPhoneSimulator/
 # Content
 audio/
 descriptions/
+.DS_Store
