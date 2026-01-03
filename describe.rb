@@ -32,7 +32,7 @@ TEMPLATE = <<~DESC
 
   This is Episode %{episode_id} of War in Pieces, a daily podcast reading Leo Tolstoy’s War and Peace one sentence at a time, using the public-domain Constance Garnett translation. This episode was read by %{reader}.
 
-  War and Peace is a novel by Leo Tolstoy, first published as a complete work in 1869, and widely regarded as one of the greatest works of world literature. This recording is read by %{reader} as part of a long-term audio project releasing one sentence per day.
+  War and Peace was first published as a complete work in 1869, and widely regarded as one of the greatest works of world literature. This recording is one small part of a grand audio project releasing one sentence per day.
 
   For more information, visit #{WEBSITE}
 DESC
