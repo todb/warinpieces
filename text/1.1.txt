@@ -1,0 +1,35 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Em-dash constructions remain a single sentence
+# Sentence boundaries follow terminal punctuation otherwise
+# Encode all this in a first-pass regex parser. It needs to be cleaned up anyway
+# due to defects in the OCR from the original PDF scan.
+
+1. Well, prince, Genoa and Lucca are now no more than private estates of the Bonaparte family.
+2. No, I warn you, that if you do not tell me we are at war, if you again allow yourself to palliate all the infamies and atrocities of this Antichrist (upon my word, I believe he is), I don’t know you in future, you are no longer my friend, no longer my faithful slave, as you say.
+3. There, how do you do, how do you do?
+4. I see I'm scaring you, sit down and talk to me.'
+5. These words were uttered in July 1805 by Anna Pavlovna Scherer, a distinguished lady of the court, and confidential maid-of-honour to the Empress Mariya Fyodorovna.
+6. It was her greeting to Prince Vassily, a man high in rank and office, who was the first to arrive at her soiree.
+7. Anna Pavlovna had been coughing for the last few days; she had an attack of la grippe, as she said—grippe was then a new word only used by a few people.
+8. In the notes she had sent round in the morning by a footman in red livery, she had written to all indiscriminately:
+9. If you have nothing better to do, count (or prince), and if the prospect of spending an evening with a poor invalid is not too alarming to you, I shall be charmed to see you at my house between 7 and 10.
+10. Annette Scherer.
+11. Heavens!
+12. what a violent outburst!
+13. the prince responded, not in the least disconcerted at such a reception.
+14. He was wearing an embroidered court uniform, stockings and slippers, and had stars on his breast, and a bright smile on his flat face.
+15. He spoke in that elaborately choice French, in which our forefathers not only spoke but thought, and with those slow, patronising intonations peculiar to a man of importance who has grown old in court society.
+16. He went up to Anna Pavlovna, kissed her hand, presenting her with a view of his perfumed, shining bald head, and complacently settled himself on the sofa.
+17. First of all, tell me how you are, dear friend.
+18. Relieve a friend’s anxiety.
+19. he said, with no change of his voice and tone, in which indifference, and even irony, was perceptible through the veil of courtesy and sympathy.
+20. How can one be well when one is in moral suffering?
+21. How can one help being worried in these times, if one has any feeling?
+22. said Anna Pavlovna.
+23. You’ll spend the whole evening with me, I hope?
+24. And the fête at the English ambassador’s?
+25. To-day is Wednesday.
+26. I must put in an appearance there.
+27. said the prince.
+28. My daughter is coming to fetch me and take me there.
