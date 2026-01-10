@@ -74,4 +74,5 @@ a few people.
 
 ## Other corner cases
 
-More corner cases will be documented here to bring some semblence of order and predictability of sentences. It's expected that the first time a corner case is encountered, a decision will be made that is binding for the remainder of the text. Hopefully, there will be a manageable number of these cases so these bit of rather arbitrary judgement calls can be easily remembered by future readers and easily encoded by machine transcribers.
+More corner cases will be documented here to bring some semblence of order and predictability of sentences. It's expected that the first time a corner case is encountered, a decision will be made that is binding for the remainder of the text. Hopefully, there will be a manageable number of these cases so these bits of rather arbitrary judgement calls can be easily remembered by future readers and easily encoded by machine transcribers. In no case will prior recordings be amended to account for new parsing rules, as such retrospective editing is likely to add additional years to recording efforts.
+
