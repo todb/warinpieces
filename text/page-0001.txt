@@ -1,6 +1,6 @@
 # Quoted utterances are sentences
 # Reporting clauses are sentences
-# Em-dash constructions remain a single sentence
+# Otherwise, compound sentences are sentences (em-dashes, semicolons, and the like)
 # Sentence boundaries follow terminal punctuation otherwise
 # See README.md in the source repo for more.
 
