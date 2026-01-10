@@ -26,11 +26,11 @@ We had to make some decisions early on on what constitutes a sentence for War in
 
 ### Parentheticals
 
-Page 1 contains a good example of a sentence, interrupted by a parenthetical aside. This is a straightforward example of a single sentence.
+Page 1 contains a good example of a sentence interrupted by a parenthetical aside. This is a straightforward example of a single sentence.
 
 > No, I warn you, that if you do not tell me we are at war, if you again allow yourself to palliate all the infamies and atrocities of this Antichrist (upon my word, I believe he is), I don’t know you in future, you are no longer my friend, no longer my faithful slave, as you say.
 
-This is a single sentence.
+1. No, I warn you, that if you do not tell me we are at war, if you again allow yourself to palliate all the infamies and atrocities of this Antichrist (upon my word, I believe he is), I don’t know you in future, you are no longer my friend, no longer my faithful slave, as you say.
 
 ### Colons as terminal punctuation.
 
