@@ -4,4 +4,4 @@ The source of the text is [archive.org](https://archive.org/details/warpeace01to
 
 Of course, the transliteration to a machine-readable, sentence-by-sentence annotation is an ongoing effort. Pull requests accepted, but I'm not yet sure how I will verify new text without human verification. I know for a fact (through direct experimentation) that OpenAI's ChatGPT implementation produces at least one error per page, due to LLM architecture reasons.
 
-I will probably need to combine OCR with some regexes or some similiar hack to get error-free text.
+I will probably need to combine OCR with some regexes or some similiar hack to get error-free text. Experiment next with [spaCy](https://en.wikipedia.org/wiki/SpaCy).
