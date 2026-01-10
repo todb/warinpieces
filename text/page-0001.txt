@@ -2,8 +2,7 @@
 # Reporting clauses are sentences
 # Em-dash constructions remain a single sentence
 # Sentence boundaries follow terminal punctuation otherwise
-# Encode all this in a first-pass regex parser. It needs to be cleaned up anyway
-# due to defects in the OCR from the original PDF scan.
+# See README.md in the source repo for more.
 
 1. Well, prince, Genoa and Lucca are now no more than private estates of the Bonaparte family.
 2. No, I warn you, that if you do not tell me we are at war, if you again allow yourself to palliate all the infamies and atrocities of this Antichrist (upon my word, I believe he is), I don’t know you in future, you are no longer my friend, no longer my faithful slave, as you say.
