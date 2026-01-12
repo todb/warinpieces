@@ -20,6 +20,8 @@ All non-code content in this repository is licensed under the Creative Commons A
 - `audio/` (podcast audio files)
 - `descriptions/` (episode descriptions)
 
+To be absolutely clear, all voiced sentences are themselves acquired by the project under a CC-BY-SA 4.0 license.
+
 See: `CONTENT_LICENSE`
 
 ### Source Material
@@ -27,6 +29,7 @@ See: `CONTENT_LICENSE`
 The source material is already in the public domain. Namely, `warpeace01tols_0.pdf`
 
 Unless otherwise noted, files are licensed according to the category above.
+
 
 # FAQ
 
