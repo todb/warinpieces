@@ -1,6 +1,6 @@
 # What is this text directory all about?
 
-This is a place to stash sentence-by-sentence text of War And Peace, for the hit podcast [War in Pieces](https://warinpeic.es). Having sentences planned out, per page, will make it much easiler to anticipate sentence counts, especially when guests record sentences out of order.
+This is a place to stash sentence-by-sentence text of War And Peace, for the hit podcast [War in Pieces](https://warinpeic.es). Having sentences planned out, per page, will make it much easier to anticipate sentence counts, especially when guests record sentences out of order.
 
 The source of the text is [archive.org](https://archive.org/details/warpeace01tols_0/page/n7/mode/2up) and is in the public domain. This particular translation and edition is the canonical source for War and Peace in English, as far as War in Pieces is concerned.
 
@@ -8,7 +8,7 @@ Of course, the transcription to a machine-readable, machine-writable sentence-by
 
 Notably, here in 2026, I know for a fact (through direct experimentation) that the current version OpenAI's ChatGPT implementation produces at least one error per page, due to fundamental LLM architecture reasons. Therefore, resolving this unacceptably error-prone machine transcription is unlikely to be trivial on a page by page basis.
 
-We will probably need to combine OCR with some regexes or some similiar hack to get error-free text. Experiment next with [spaCy](https://en.wikipedia.org/wiki/SpaCy). In all cases, transcribed passages should be no more than one page per file.
+We will probably need to combine OCR with some regexes or some similiar hack to get error-free text. We expect to experiment next with [spaCy](https://en.wikipedia.org/wiki/SpaCy). In all cases, transcribed passages should be no more than one page per file.
 
 Note that the the filenames are a lie; page 1 starts on page 13 of the original PDF from Duke University Library's scan output.
 
@@ -20,7 +20,7 @@ We had to make some decisions early on on what constitutes a sentence for War in
 - Reporting clauses are sentences
 - Colons terminate sentences
 - Otherwise, sentence boundaries follow terminal punctuation
-  - This means that compound sentences (those containing em-dashes, semicolons, and the like) are sentences. 
+  - This means that compound sentences (those containing dashes, semicolons, and the like) are sentences. 
 
 ## Examples
 
