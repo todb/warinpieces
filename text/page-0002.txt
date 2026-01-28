@@ -1,0 +1,48 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Otherwise, compound sentences are sentences (em-dashes, semicolons, and the like)
+# Sentence boundaries follow terminal punctuation otherwise
+# See README.md in the source repo for more.
+
+29. "I thought to-day's fete had been put off.
+30. I confess that all these festivities and fireworks are beginning to pall."
+31. "If they had known that it was your wish, the fete would have been put off,"
+32. said the prince, from habit, like a wound-up clock, saying things he did not even wish to be believed.
+33. "Don’t tease me.
+34. Well, what has been decided in regard to the Novosiltsov dispatch? You know everything."
+35. "What is there to tell?"
+36. said the prince in a tired, listless tone.
+37. "What has been decided?
+38. It has been decided that Bonaparte has burnt his ships, and I think that we are about to burn ours."
+39. Prince Vassily always spoke languidly, like an actor repeating his part in an old play.
+40. Anna Pavlovna Scherer, in spite of her forty years, was on the contrary brimming over with excitement and impulsiveness.
+41. To be enthusiastic had become her pose in society, and at times even when she had, indeed, no inclination to be so, she was enthusiastic so as not to disappoint the expectations of those who knew her.
+42. The affected smile which played continually about Anna Pavlovna's face, out of keeping as it was with her faded looks, expressed a spoilt child’s continual consciousness of a charming failing of which she had neither the wish nor the power to correct herself, which, indeed, she saw no need to correct.
+43. In the midst of a conversation about politics, Anna Pavlovna became greatly excited.
+44. "Ah, don’t talk to me about Austria!
+45. I know nothing about it, perhaps, but Austria has never wanted, and doesn’t want war.
+46. She is betraying us.
+47. Russia alone is to be the saviour of Europe.
+48. Our benefactor knows his lofty destiny, and will be true to it.
+49. That's the one thing I have faith in.
+50. Our good and sublime emperor has the greatest part in the world to play, and he is so virtuous and noble that God will not desert him, and he will fulfil his mission—to strangle the hydra of revolution, which is more horrible than ever now in the person of this murderer and miscreant...
+51. Whom can we reckon on, I ask you?...
+52. England with her commercial spirit will not comprehend and cannot comprehend all the loftiness of soul of the Emperor Alexander.
+53. She has refused to evacuate Malta.
+54. She tries to detect, she seeks a hidden motive in our actions.
+55. What have they said to Novosiltsov?
+56. Nothing.
+57. They didn’t understand, they’re incapable of understanding the self-sacrifice of our emperor, who desires nothing for himself, and everything for the good of humanity.
+58. And what have they promised?
+59. Nothing.
+60. What they have promised even won’t come to any thing!
+61. Prussia has declared that Bonaparte is invincible, and that all Europe can do nothing against him...
+62. And I don’t believe a single word of what was said by Hardenberg or Haugwitz.
+63. That famous Prussian neutrality is a mere snare.
+64. I have no faith but in God and the lofty destiny of our adored emperor.
+65. He will save Europe!"
+66. She stopped short abruptly with a smile of amusement at her own warmth.
+67. "I imagine,"
+68. said the prince, smiling,
+69. "that if you had been sent instead of our dear Wintsengerode, you would have carried the Prussian king's consent by storm,—you are so eloquent.
+70. Will you give me some tea?"
