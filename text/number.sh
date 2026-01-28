@@ -2,7 +2,6 @@
 
 number=""
 input=""
-start=""
 output=""
 
 while [[ $# -gt 0 ]]; do
@@ -13,10 +12,6 @@ while [[ $# -gt 0 ]]; do
       ;;
     -i|--input)
       input="$2"
-      shift 2
-      ;;
-    -s|--start)
-      start="$2"
       shift 2
       ;;
     -o|--output)
@@ -30,13 +25,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$number" || -z "$input" || -z "$start" || -z "$output" ]]; then
-  echo "Usage: $0 -n NUMBER -i INPUT -s STRING -o OUTPUT" >&2
+if [[ -z "$number" || -z "$input" || -z "$output" ]]; then
+  echo "Usage: $0 -n NUMBER -i INPUT -o OUTPUT" >&2
   exit 1
 fi
 
-awk -v n="$number" -v s="$start" '
-  $0 ~ s { start=1 }
+awk -v n="$number" '
+  start==0 && $0 !~ /^[[:space:]]*(#|$)/ { start=1 }
   start { printf "%d. %s\n", n++, $0; next }
   { print }
 ' "$input" > "$output"
