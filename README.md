@@ -35,7 +35,7 @@ Unless otherwise noted, files are licensed according to the category above.
 
 1. How often do you publish this podcast?
 
-We publish exactly one sentence, per day.
+We publish exactly one sentence, per day. However, the GitHub repo may lead the podcast by a few days. Don't listen ahead of you don't want spoilers. This is neccesary to ensure continuity in case of sudden interruptions that pop up for the primary reader.
 
 2. What is a sentence?
 
