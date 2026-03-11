@@ -1,0 +1,51 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Otherwise, compound sentences are sentences (em-dashes, semicolons, and the like)
+# Sentence boundaries follow terminal punctuation otherwise
+# See README.md in the source repo for more.
+
+72. ‘In a moment.
+73. By the way,’
+74. she added, subsiding into calm again,
+75. ‘there are two very interesting men to be here to-night, the vicomte de Mortemart; he is connected with the Montmorencies through the Rohans, one of the best families in France.
+76. He is one of the good emigrants, the real ones.
+77. Then Abbe Morio; you know that profound intellect?
+78. He has been received by the emperor.
+79. Do you know him?’
+80. ‘Ah!
+81. I shall be delighted,’
+82. said the prince.
+83. ‘Tell me,’
+84. he added, as though he had just recollected something, speaking with special nonchalance, though the question was the chief motive of his visit:
+85. ‘is it true that the dowager empress desires the appointment of Baron Funke as first secretary to the Vienna legation?
+86. He is a poor creature, it appears, that baron.’
+87. Prince Vassily would have liked to see his son appointed to the post, which people were trying, through the Empress Marya Fyodorovna, to obtain for the baron.
+88. Anna Pavlovna almost closed her eyes to signify that neither she nor any one else could pass judgment on what the empress might be pleased or see fit to do.
+89. ‘Baron Funke has been recommended to the empress-mother by her sister,’
+90. was all she said in a dry, mournful tone.
+91. When Anna Pavlovna spoke of the empress her countenance suddenly assumed a profound and genuine expression of devotion and respect, mingled with melancholy, and this happened whenever she mentioned in conversation her illustrious patroness.
+92. She said that her Imperial Majesty had been graciously pleased to show great esteem to Baron Funke, and again a shade of melancholy passed over her face.
+93. The prince preserved an indifferent silence.
+94. Anna Pavlovna, with the adroitness and quick tact of a courtier and a woman, felt an inclination to chastise the prince for his temerity in referring in such terms to a person recommended to the empress, and at the same time to console him.
+95. ‘But about your own family,’
+96. she said,
+97. ‘do you know that your daughter, since she has come out, charms everybody?
+98. People say she is as beautiful as the day.’
+99. The prince bowed in token of respect and acknowledgment.
+100. ‘I often think,’
+101. pursued Anna Pavlovna, moving up to the prince and smiling cordially to him, as though to mark that political and worldly conversation was over and now intimate talk was to begin:
+102. ‘I often think how unfairly the blessings of life are sometimes apportioned.
+103. Why has fate given you two such splendid children—I don’t include Anatole, your youngest—him I don’t like’
+104. (she put in with a decision admitting of no appeal, raising her eyebrows)
+105. ‘such charming children?
+106. And you really seem to appreciate them less than any one, and so you don’t deserve them.’
+107. And she smiled her ecstatic smile.
+108. ‘What would you have?
+109. Lavater would have said that I have not the bump of paternity,’
+110. said the prince.
+111. ‘Don’t keep on joking.
+112. I wanted to talk to you seriously.
+113. Do you know I’m not pleased with your youngest son.
+114. Between ourselves’
+115. (her face took its mournful expression)
+116. ‘people have been talking about him to her majesty and commiserating you...’
