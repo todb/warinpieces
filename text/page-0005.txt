@@ -1,0 +1,31 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Utterances that end with elipses (...) end the sentence
+# Otherwise, compound sentences are sentences (em-dashes, semicolons, and the like)
+# Sentence boundaries follow terminal punctuation otherwise
+# See README.md in the source repo for more.
+# Page 5 starts on sentence 1
+
+1. Anna Pavlovna’s drawing-room gradually began to fill.
+2. The people of the highest distinction in Petersburg were there, people very different in ages and characters, but alike in the set in which they moved.
+3. The daughter of Prince Vassily, the beauty, Ellen, came to fetch her father and go with him to the ambassador’s fete.
+4. She was wearing a ball-dress with an imperial badge on it.
+5. The young Princess Bolkonsky was there, celebrated as the most seductive woman in Petersburg.
+6. She had been married the previous winter, and was not now going out into the great world on account of her interesting condition, but was still to be seen at small parties.
+7. Prince Ippolit, the son of Prince Vassily, came too with Mortemart, whom he introduced.
+8. The Abbe Morio was there too, and many others.
+9. ‘Have you not yet seen, or not been introduced to ma tante?'
+10. Anna Pavlovna said to her guests as they arrived, and very seriously she led them up to a little old lady wearing tall bows, who had sailed in out of the next foom as soon as the guests began to arrive.
+11. Anna Pavlovna mentioned their names, deliberately turning her eyes from the guest to ma tante, and then withdrew.
+12. All the guests performed the ceremony of greeting the aunt, who was unknown, uninteresting and unnecessary to every one.
+13. Anna Pavlovna with mournful, solemn sympathy, followed these greetings, silently approving them.
+14. Ma tante said to each person the same words about his health, her own health, and the health of her majesty, who was, thank God, better to-day.
+15. Every one, though from politeness showing no undue haste, moved away from the old lady with a sense of relief at a tiresome duty accomplished, and did not approach her again all the evening.
+16. The young Princess Bolkonsky had come with her work in a gold-embroidered velvet bag.
+17. Her pretty little upper lip, faintly darkened with down, was very short over her teeth, but was all the more charming when it was lifted, and still more charming when it was at times drawn down to meet the lower lip.
+18. As is always the case with perfectly charming women, her defect—the shortness of the lip and the half-opened mouth—seemed her peculiar, her characteristic beauty.
+19. Every one took delight in watching the pretty creature full of life and gaiety, so soon to be a mother, and so lightly bearing her burden.
+20. Old men and bored, depressed young men gazing at her felt as though they were becoming like her, by being with her and talking a little while to her.
+21. Any man who spoke to her, and at every word saw her bright little smile and shining white teeth, gleaming continually, imagined that he was being particularly successful this evening.
+22. And this each thought in turn.
+23. The little princess, moving with a slight swing, walked with rapid little steps round the table with her work-bag in her hand, and gaily arranging the folds of her gown, sat down on a sofa near the silver samovar; it seemed as though everything she did was a festival for herself and all around her.
