@@ -60,7 +60,7 @@ DESC
 DESC_DIR = 'descriptions'
 FileUtils.mkdir_p(DESC_DIR)
 
-episode_files = Dir.glob('audio/*').select { |f| f =~ /\.(m4a|mp3)$/i }.sort
+episode_files = Dir.glob('audio/*').select { |f| f =~ /1\.2\.\d+\.(m4a|mp3)$/i }.sort
 
 if target_episode
   part, chapter, sentence = target_episode.split('.')
