@@ -4,25 +4,29 @@
 # Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)
 # Sentence boundaries follow terminal punctuation otherwise
 
-56. Just now he had walked off without listening to the lady who was addressing him: now he detained by his talk a lady who wanted to get away from him.
-57. With head bent and legs planted wide apart, he began explaining to Anna Pavlovna why he considered the abbe's scheme chimerical.
-58. 'We will talk of it later,'
-59. said Anna Pavlovna, smiling.
-60. And getting rid of this unmannerly young man she returned to her duties, keeping her eyes and ears open, ready to fly to the assistance at any point where the conversation was flagging.
-61. Just as the foreman of a spinning-mill settles the work-people in their places, walks up and down the works, and noting any stoppage or unusual creaking or too loud a whir in the spindles, goes up hurriedly, slackens the machinery and sets it going properly, so Anna Pavlovna, walking about her drawing-room, went up to any circle that was pausing or too loud in conversation and by a single word or change of position set the conversational machine going again in its regular, decorous way.
-62. But in the midst of these cares ' a special anxiety on Pierre's account could still be discerned in her.
-63. She kept an anxious watch on him as he went up to listen to what was being said near Mortemart.
-64. and walked away to another group where the abbe was talking.
-65. Pierre had been educated abroad, and this party at Anna Pavlovna's was the first at which he had been present in Russia.
-66. He knew all the intellectual lights of Petersburg gathered together here, and his eyes strayed about like a child's in a toy-shop.
-67. He was afraid at every moment of missing some intellectual conversation which he might have heard.
-68. Gazing at the self-confident and refined expressions of the personages assembled here, he was continually expecting something exceptionally clever.
-69. At last he moved up to Abbe Morio.
-70. The conversation seemed interesting, and he stood still waiting for an opportunity of expressing his own ideas, as young people are fond of doing.
-71. • Anna Pavlovna's soiree was in full swing.
-72. The spindles kept up their regular hum on all sides without pause.
-73. Except the aunt, beside whom was sitting no one but an elderly lady with a thin, careworn face, who seemed rather out of her element in this brilliant society, the company was broken up into three groups.
-74. In one of these, the more masculine, the centre was the abbe; in the other, the group of young people, the chief attractions were the beautiful Princess Ellen, Prince Vassily's daughter, and the little Princess Bolkonsky, with her rosy prettiness, too plump for her years.
-75. In the third group were Mortemart and Anna Pavlovna.
-76. The vicomte was a pretty young gentleman with soft features and manners, who obviously regarded himself as a celebrity, but with goodbreeding modestly allowed the company the benefit of his society.
-77. Anna Pavlovna unmistakably regarded him as the chief entertainment she was s WAR AND PEACE
+24. 'I have brought my work,'
+25. she said, displaying her reticule, and addressing the company generally.
+26. 'Mind, Annette, don't play me a nasty trick,'
+27. she turned to the lady of the house; 'you wrote to me that it was quite a little gathering.
+28. See how I am got up.
+29. ' And she flung her arms open to show her elegant grey dress, trimmed with lace and girt a little below the bosom with a broad sash. '
+30. Never mind, Lise, you will always be prettier than any one else,' answered Anna Pavlovna.
+31. 'You know my husband is deserting me,'
+32. she went on in just the same voice, addressing a general; 'he is going to get himself killed.
+33. Tell me what this nasty war is for,' she said to Prince Vassily, and without waiting for an answer she turned to Prince Vassily's daughter, the beautiful Ellen.
+34. 'How delightful this little princess is! '
+35. said Prince Vassily in an undertone to Anna Pavlovna.
+36. Soon after the little princess, there walked in a massively built, stout young man in spectacles, with a cropped head, light breeches in the mode of the day, with a high lace ruffle and a ginger-coloured coat.
+37. This stout young man was the illegitimate son of a celebrated dandy of the days of Catherine, Count Bezuhov, who was now dying at Moscow.
+38. He had not yet entered any branch of the service; he had only just returned from abroad, where he had been educated, and this was his first appearance in society.
+39. Anna Pavlovna greeted him with a nod reserved for persons of the very lowest hierarchy in her drawing-room.
+40. But, in spite of this greeting, Anna Pavlovna's countenance showed signs on seeing Pierre of uneasiness and alarm, such as is shown at the sight of something too big and out of place.
+41. Though Pierre certainly was somewhat bigger than any of the other men in the room, this expression could only have reference to the clever, though shy, observant and natural look that distinguished him from every one else in the drawing-room.
+42. 'It is very kind of you, M. Pierre, to have come to see a poor invalid,'
+43. Anna Pavlovna said to him, exchanging anxious glances with her aunt, to whom she was conducting him.
+44. Pierre murmured something unintelligible, and continued searching for something with his eyes.
+45. He smiled gleefully and delightedly, bowing to the little princess as though she were an intimate friend, and went up to the aunt.
+46. Anna Pavlovna's alarm was not without grounds, for Pierre walked away from the aunt without waiting to the end of her remarks about her majesty's health.
+47. Anna Pavlovna stopped him in dismay with the words: 'You don't know Abbe Morio?
+48. He's a very interesting man,' she said.
+49. 'Yes, I have heard of his scheme for perpetual peace, and it's very interesting, but hardly possible . . .'

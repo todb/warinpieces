@@ -30,8 +30,8 @@ end
 
 def get_page_boundaries(page_num)
   # Get the start and end line numbers for a given page
-  # Page starts after the page header (skip header + blank line)
-  # Page ends before the next page header
+  # Structure: HEADER + blank + CONTENT + page# + blanks + NEXT_HEADER
+  # So content spans from (header + 2) to (next_header - 6)
   headers = find_page_headers
 
   if page_num < 1 || page_num > headers.length
@@ -41,9 +41,11 @@ def get_page_boundaries(page_num)
   # Page starts 2 lines after its header (skip header + blank line)
   start_line = headers[page_num - 1][:line_num] + 2
 
-  # Page ends 2 lines before the next header (skip blank + next header)
+  # Page ends before page number and blanks preceding the next header
+  # Structure: content + page_number + blanks + next_header
+  # We want to stop at content (before page number)
   if page_num < headers.length
-    end_line = headers[page_num][:line_num] - 2
+    end_line = headers[page_num][:line_num] - 4
   else
     # Last page goes to end of file
     end_line = File.readlines(DJVU_FILE).length
@@ -220,12 +222,49 @@ def split_into_sentences(text)
     # Detect quote start (all quotes normalized to ASCII in clean_text)
     if text[pos] == "'" || text[pos] == '"'
       quote_char = text[pos]
+
+      # Check if this is a contraction (apostrophe surrounded by word chars)
+      # If so, treat as part of regular text, not a quote
+      if quote_char == "'" && pos > 0 && pos < text.length - 1
+        prev_char = text[pos - 1]
+        next_char = text[pos + 1]
+        if prev_char.match?(/\w/) && next_char.match?(/\w/)
+          # This is a contraction like "it's" or "don't", skip it
+          pos += 1
+          next
+        end
+      end
+
+      # Check if this is an orphaned quote (stray quote followed by chapter marker)
+      # Skip it if found, but be careful not to skip legitimate opening quotes of dialogue
+      if quote_char == "'"
+        # Look ahead to see what follows
+        temp_pos = pos + 1
+        temp_pos += 1 while temp_pos < text.length && text[temp_pos] == ' '
+        if temp_pos < text.length && text[temp_pos..-1].start_with?('[[[CHAPTER')
+          # Only skip if followed by chapter marker
+          pos += 1
+          next
+        end
+      end
+
       quote_start = pos
       pos += 1
 
-      # Find closing quote
+      # Find closing quote (skipping contractions)
       while pos < text.length && text[pos] != quote_char
         pos += 1
+        # Handle potential contractions in quoted text
+        if pos < text.length && text[pos] == quote_char && quote_char == "'"
+          if pos > 0 && pos < text.length - 1
+            prev = text[pos - 1]
+            next_ch = text[pos + 1]
+            if prev.match?(/\w/) && next_ch.match?(/\w/)
+              pos += 1
+              next
+            end
+          end
+        end
       end
       pos += 1 if pos < text.length # Include closing quote
 
@@ -298,8 +337,13 @@ def split_into_sentences(text)
         end
       end
 
-      # Check for ellipsis
+      # Check for ellipsis (both "..." and ". . ." patterns)
       if pos >= 2 && text[pos-2..pos] == '...'
+        pos += 1
+        break
+      end
+      # Also check for spaced ellipsis pattern: ". . ." (dots with spaces)
+      if pos >= 4 && text[pos-4..pos].match?(/\. \. \.$/)
         pos += 1
         break
       end
