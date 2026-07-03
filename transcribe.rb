@@ -36,6 +36,17 @@ RULES = [
   "# Sentence boundaries follow terminal punctuation otherwise",
 ]
 
+def find_last_sentence_number(filepath)
+  # Read file and find the last sentence number
+  # Sentences are formatted as: "123. sentence text"
+  lines = File.readlines(filepath)
+  lines.reverse.each do |line|
+    match = line.match(/^(\d+)\./)
+    return match[1].to_i if match
+  end
+  nil
+end
+
 def extract_page_text(page_num)
   boundaries = PAGE_BOUNDARIES[page_num]
   abort "Page #{page_num} not yet configured" unless boundaries
@@ -224,7 +235,20 @@ def transcribe_page(page_num)
   sentences = split_into_sentences(clean)
 
   output_file = File.join(TEXT_DIR, sprintf("page-%04d.txt", page_num))
+
+  # Determine starting sentence number
   start_num = boundaries[:start_sentence]
+  if page_num > 1
+    # Try to read the last sentence number from the previous page
+    prev_page_file = File.join(TEXT_DIR, sprintf("page-%04d.txt", page_num - 1))
+    if File.exist?(prev_page_file)
+      prev_last_sentence = find_last_sentence_number(prev_page_file)
+      if prev_last_sentence
+        start_num = prev_last_sentence + 1
+        puts "[*] Continuing from page #{page_num - 1} (last sentence: #{prev_last_sentence})"
+      end
+    end
+  end
 
   # Write first pass
   puts "[*] Writing first pass (#{sentences.count} sentences)"
