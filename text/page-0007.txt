@@ -4,27 +4,25 @@
 # Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)
 # Sentence boundaries follow terminal punctuation otherwise
 
-56. get away again to her duties as hostess, but Pierre committed the opposite incivility.
-57. Just now he had walked off without listening to the lady who was addressing him:
-58. now he detained by his talk a lady who wanted to get away from him.
-59. With head bent and legs planted wide apart, he began explaining to Anna Pavlovna why he considered the abbe’s scheme chimerical.
-60. ‘We will talk of it later,’
-61. said Anna Pavlovna, smiling.
-62. And getting rid of this unmannerly young man she returned to her duties, keeping her eyes and ears open, ready to fly to the assistance at any point where the conversation was flagging.
-63. Just as the foreman of a spinning-mill settles the work-people in their places, walks up and down the works, and noting any stoppage or unusual creaking or too loud a whir in the spindles, goes up hurriedly, slackens the machinery and sets it going properly, so Anna Pavlovna, walking about her drawing-room, went up to any circle that was pausing or too loud in conversation and by a single word or change of position set the conversational machine going again in its regular, decorous way.
-64. But in the midst of these cares ' a special anxiety on Pierre’s account could still be discerned in her.
-65. She kept an anxious watch on him as he went up to listen to what was being said near Mortemart.
-66. and walked away to another group where the abbe was talking.
-67. Pierre had been educated abroad, and this party at Anna Pavlovna’s was the first at which he had been present in Russia.
-68. He knew all the intellectual lights of Petersburg gathered together here, and his eyes strayed about like a child's in a toy-shop.
-69. He was afraid at every moment of missing some intellectual conversation which he might have heard.
-70. Gazing at the self-confident and refined expressions of the personages assembled here, he was continually expecting something exceptionally clever.
-71. At last he moved up to Abbe Morio.
-72. The conversation seemed interesting, and he stood still waiting for an opportunity of expressing his own ideas, as young people are fond of doing.
-73. • Anna Pavlovna’s soiree was in full swing.
-74. The spindles kept up their regular hum on all sides without pause.
-75. Except the aunt, beside whom was sitting no one but an elderly lady with a thin, careworn face, who seemed rather out of her element in this brilliant society, the company was broken up into three groups.
-76. In one of these, the more masculine, the centre was the abbe; in the other, the group of young people, the chief attractions were the beautiful Princess Ellen, Prince Vassily's daughter, and the little Princess Bolkonsky, with her rosy prettiness, too plump for her years.
-77. In the third group were Mortemart and Anna Pavlovna.
-78. The vicomte was a pretty young gentleman with soft features and manners, who obviously regarded himself as a celebrity, but with goodbreeding modestly allowed the company the benefit of his society.
-79. Anna Pavlovna unmistakably regarded him as the chief entertainment she was s
+56. Just now he had walked off without listening to the lady who was addressing him: now he detained by his talk a lady who wanted to get away from him.
+57. With head bent and legs planted wide apart, he began explaining to Anna Pavlovna why he considered the abbe's scheme chimerical.
+58. 'We will talk of it later,'
+59. said Anna Pavlovna, smiling.
+60. And getting rid of this unmannerly young man she returned to her duties, keeping her eyes and ears open, ready to fly to the assistance at any point where the conversation was flagging.
+61. Just as the foreman of a spinning-mill settles the work-people in their places, walks up and down the works, and noting any stoppage or unusual creaking or too loud a whir in the spindles, goes up hurriedly, slackens the machinery and sets it going properly, so Anna Pavlovna, walking about her drawing-room, went up to any circle that was pausing or too loud in conversation and by a single word or change of position set the conversational machine going again in its regular, decorous way.
+62. But in the midst of these cares ' a special anxiety on Pierre's account could still be discerned in her.
+63. She kept an anxious watch on him as he went up to listen to what was being said near Mortemart.
+64. and walked away to another group where the abbe was talking.
+65. Pierre had been educated abroad, and this party at Anna Pavlovna's was the first at which he had been present in Russia.
+66. He knew all the intellectual lights of Petersburg gathered together here, and his eyes strayed about like a child's in a toy-shop.
+67. He was afraid at every moment of missing some intellectual conversation which he might have heard.
+68. Gazing at the self-confident and refined expressions of the personages assembled here, he was continually expecting something exceptionally clever.
+69. At last he moved up to Abbe Morio.
+70. The conversation seemed interesting, and he stood still waiting for an opportunity of expressing his own ideas, as young people are fond of doing.
+71. • Anna Pavlovna's soiree was in full swing.
+72. The spindles kept up their regular hum on all sides without pause.
+73. Except the aunt, beside whom was sitting no one but an elderly lady with a thin, careworn face, who seemed rather out of her element in this brilliant society, the company was broken up into three groups.
+74. In one of these, the more masculine, the centre was the abbe; in the other, the group of young people, the chief attractions were the beautiful Princess Ellen, Prince Vassily's daughter, and the little Princess Bolkonsky, with her rosy prettiness, too plump for her years.
+75. In the third group were Mortemart and Anna Pavlovna.
+76. The vicomte was a pretty young gentleman with soft features and manners, who obviously regarded himself as a celebrity, but with goodbreeding modestly allowed the company the benefit of his society.
+77. Anna Pavlovna unmistakably regarded him as the chief entertainment she was s WAR AND PEACE

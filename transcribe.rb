@@ -23,8 +23,8 @@ PAGE_BOUNDARIES = {
   3 => { start_line: 115, end_line: 178, start_sentence: 72 },
   4 => { start_line: 179, end_line: 240, start_sentence: 117 },
   5 => { start_line: 241, end_line: 332, start_sentence: 1 },
-  6 => { start_line: 333, end_line: 388, start_sentence: 24 },
-  7 => { start_line: 450, end_line: 506, start_sentence: 56 },
+  6 => { start_line: 333, end_line: 453, start_sentence: 24 },
+  7 => { start_line: 453, end_line: 507, start_sentence: 56 },
 }
 
 # Sentence splitting rules (as comments for reference)
@@ -55,8 +55,21 @@ def clean_text(raw_text)
   # Remove section markers (Roman numerals on their own line)
   text.gsub!(/^\s*[IVX]+\s*$/, '')
 
-  # Note: Quote normalization is complex due to OCR curly quotes.
-  # Manual fixing of quote/reporting clause splits is done in second pass.
+  # Skip leading sentence fragment: find first complete sentence
+  # (i.e., skip everything up to and including the first period/! /?)
+  text.sub!(/^[^.!?]*?[.!?]\s+/, '')
+
+  # Normalize Unicode quotes to ASCII
+  # U+2018 (LEFT SINGLE QUOTATION MARK) -> '
+  # U+2019 (RIGHT SINGLE QUOTATION MARK) -> '
+  # U+201A (SINGLE LOW-9 QUOTATION MARK) -> '
+  # U+201B (SINGLE HIGH-REVERSED-9 QUOTATION MARK) -> '
+  # U+201C (LEFT DOUBLE QUOTATION MARK) -> "
+  # U+201D (RIGHT DOUBLE QUOTATION MARK) -> "
+  # U+201E (DOUBLE LOW-9 QUOTATION MARK) -> "
+  # U+201F (DOUBLE HIGH-REVERSED-9 QUOTATION MARK) -> "
+  text.gsub!(/[\u{2018}\u{2019}\u{201A}\u{201B}]/, "'")
+  text.gsub!(/[\u{201C}\u{201D}\u{201E}\u{201F}]/, '"')
 
   # Normalize multiple spaces to single space
   text.gsub!(/\s+/, ' ')
@@ -122,30 +135,21 @@ def split_into_sentences(text)
     pos += 1 while pos < text.length && text[pos].match?(/\s/)
     break if pos >= text.length
 
-    # Detect quote start (ASCII or Unicode quotes)
-    quote_char = nil
-    if text[pos] == "'" || text[pos] == "\u{2018}" || text[pos] == "\u{2019}"
-      quote_char = "'"  # Normalize to ASCII single quote for matching
-    elsif text[pos] == '"' || text[pos] == "\u{201C}" || text[pos] == "\u{201D}"
-      quote_char = '"'  # Normalize to ASCII double quote for matching
-    end
-
-    if quote_char
+    # Detect quote start (all quotes normalized to ASCII in clean_text)
+    if text[pos] == "'" || text[pos] == '"'
+      quote_char = text[pos]
       quote_start = pos
       pos += 1
 
-      # Find closing quote (match corresponding Unicode or ASCII quote)
-      while pos < text.length
-        c = text[pos]
-        break if ((quote_char == "'" && (c == "'" || c == "\u{2019}")) ||
-                  (quote_char == '"' && (c == '"' || c == "\u{201D}")))
+      # Find closing quote
+      while pos < text.length && text[pos] != quote_char
         pos += 1
       end
       pos += 1 if pos < text.length # Include closing quote
 
       # Collect trailing punctuation on the quote
       quote_end = pos
-      while pos < text.length && text[pos].match?(/[.!?,:;]/)
+      while pos < text.length && text[pos].match?(/[.!?,;]/)
         pos += 1
       end
 
@@ -166,7 +170,7 @@ def split_into_sentences(text)
           # Collect the reporting clause until terminal punctuation
           clause_start = pos
           while pos < text.length
-            if text[pos].match?(/[.!?:]/)
+            if text[pos].match?(/[.!?]/)
               pos += 1
               break
             end
@@ -194,8 +198,8 @@ def split_into_sentences(text)
         break
       end
 
-      # Check for terminal punctuation
-      if text[pos].match?(/[.!?:]/)
+      # Check for terminal punctuation (not colons - they can be in compound sentences)
+      if text[pos].match?(/[.!?]/)
         pos += 1
         break
       end
