@@ -3,29 +3,41 @@
 # Utterances that end with elipses (...) end the sentence
 # Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)
 # Sentence boundaries follow terminal punctuation otherwise
+# Line-end hyphenated words (which might be broken with a ¬ or - character) must be rejoined when transcribing per page.
+# Numbering restarts at each chapter start
+# Pages start with the first full complete sentence
+# See README.md in the source repo for more.
+# Page 6 starts on sentence 24
 
-24. I'll try my prentice hand as an old maid in your family.
-# Chapter 2
-1. Anna Pavlovna's drawing-room gradually began to fill.
-2. The people of the highest distinction in Petersburg were there, people very different in ages and characters, but alike in the set in which they moved.
-3. The daughter of Prince Vassily, the beauty, Ellen, came to fetch her father and go with him to the ambassador's fete.
-4. She was wearing a ball-dress with an imperial badge on it.
-5. The young Princess Bolkonsky was there, celebrated as the most seductive woman in Petersburg.
-6. She had been married the previous winter, and was not now going out into the great world on account of her interesting condition, but was still to be seen at small parties.
-7. Prince Ippolit, the son of Prince Vassily, came too with Mortemart, whom he introduced.
-8. The Abbe Morio was there too, and many others.
-9. Have you not yet seen, or not been introduced to ma tante?
-10. Anna Pavlovna said to her guests as they arrived, and very seriously she led them up to a little old lady wearing tall bows, who had sailed in out of the next foom as soon as the guests began to arrive.
-11. Anna Pavlovna mentioned their names, deliberately turning her eyes from the guest to ma tante, and then withdrew.
-12. All the guests performed the ceremony of greeting the aunt, who was unknown, uninteresting and unnecessary to every one.
-13. Anna Pavlovna with mournful, solemn sympathy, followed these greetings, silently approving them.
-14. Ma tante said to each person the same words about his health, her own health, and the health of her majesty, who was, thank God, better to-day.
-15. Every one, though from politeness showing no undue haste, moved away from the old lady with a sense of relief at a tiresome duty accomplished, and did not approach her again all the evening.
-16. The young Princess Bolkonsky had come with her work in a gold-embroidered velvet bag.
-17. Her pretty little upper lip, faintly darkened with down, was very short over her teeth, but was all the more charming when it was lifted, and still more charming when it was at times drawn down to meet the lower lip.
-18. As is always the case with perfectly charming women, her defect — the shortness of the lip and the half-opened mouth — seemed her peculiar, her characteristic beauty.
-19. Every one took delight in watching the pretty creature full of life and gaiety, so soon to be a mother, and so lightly bearing her burden.
-20. Old men and bored, depressed young men gazing at her felt as though they were becoming like her, by being with her and talking a little while to her.
-21. Any man who spoke to her, and at every word saw her bright little smile and shining white teeth, gleaming continually, imagined that he was being particularly successful this evening.
-22. And this each thought in turn.
-23. The little princess, moving with a slight swing, walked with rapid little
+24. 'I have brought my work,'
+25. she said, displaying her reticule, and addressing the company generally.
+26. 'Mind, Annette, don't play me a nasty trick,'
+27. she turned to the lady of the house;
+28. 'you wrote to me that it was quite a little gathering.
+29. See how I am got up.'
+30. And she flung her arms open to show her elegant grey dress, trimmed with lace and girt a little below the bosom with a broad sash.
+31. 'Never mind, Lise, you will always be prettier than any one else,'
+32. answered Anna Pavlovna.
+33. 'You know my husband is deserting me,'
+34. she went on in just the same voice, addressing a general;
+35. 'he is going to get himself killed.
+36. Tell me what this nasty war is for,'
+37. she said to Prince Vassily, and without waiting for an answer she turned to Prince Vassily's daughter, the beautiful Ellen.
+38. 'How delightful this little princess is!'
+39. said Prince Vassily in an undertone to Anna Pavlovna.
+40. Soon after the little princess, there walked in a massively built, stout young man in spectacles, with a cropped head, light breeches in the mode of the day, with a high lace ruffle and a ginger-coloured coat.
+41. This stout young man was the illegitimate son of a celebrated dandy of the days of Catherine, Count Bezuhov, who was now dying at Moscow.
+42. He had not yet entered any branch of the service; he had only just returned from abroad, where he had been educated, and this was his first appearance in society.
+43. Anna Pavlovna greeted him with a nod reserved for persons of the very lowest hierarchy in her drawing-room.
+44. But, in spite of this greeting, Anna Pavlovna's countenance showed signs on seeing Pierre of uneasiness and alarm, such as is shown at the sight of something too big and out of place.
+45. Though Pierre certainly was somewhat bigger than any of the other men in the room, this expression could only have reference to the clever, though shy, observant and natural look that distinguished him from every one else in the drawing-room.
+46. 'It is very kind of you, M. Pierre, to have come to see a poor invalid,'
+47. Anna Pavlovna said to him, exchanging anxious glances with her aunt, to whom she was conducting him.
+48. Pierre murmured something unintelligible, and continued searching for something with his eyes.
+49. He smiled gleefully and delightedly, bowing to the little princess as though she were an intimate friend, and went up to the aunt.
+50. Anna Pavlovna's alarm was not without grounds, for Pierre walked away from the aunt without waiting to the end of her remarks about her majesty's health.
+51. Anna Pavlovna stopped him in dismay with the words:
+52. 'You don't know Abbe Morio?
+53. He's a very interesting man,'
+54. she said.
+55. 'Yes, I have heard of his scheme for perpetual peace, and it's very interesting, but hardly possible...'
