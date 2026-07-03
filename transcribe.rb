@@ -15,6 +15,18 @@ require 'optparse'
 DJVU_FILE = 'warpeace01tols_0_djvu.txt'
 TEXT_DIR = 'text'
 
+def find_page_headers
+  # Find all "WAR AND PEACE" page headers and their line numbers
+  lines = File.readlines(DJVU_FILE)
+  headers = []
+  lines.each_with_index do |line, idx|
+    if line.match?(/^WAR\s+AND\s+PEACE/)
+      headers << { line_num: idx + 1, text: line.strip }
+    end
+  end
+  headers
+end
+
 # Page boundaries: page_number => { start_line:, end_line:, start_sentence: }
 # start_line is 1-indexed in the DJVU file
 PAGE_BOUNDARIES = {
@@ -377,14 +389,31 @@ end
 
 # Parse command line
 page_num = nil
+list_pages = false
+
 OptionParser.new do |opts|
   opts.on('--page NUM', Integer, 'Page number to transcribe') do |num|
     page_num = num
   end
+  opts.on('--list-pages', 'List all page header locations in DJVU') do
+    list_pages = true
+  end
 end.parse!
 
+if list_pages
+  puts "Page headers in #{DJVU_FILE}:"
+  puts
+  find_page_headers.each do |header|
+    puts "Line #{header[:line_num]}: #{header[:text]}"
+  end
+  puts
+  puts "To transcribe a page, add boundaries to PAGE_BOUNDARIES in transcribe.rb:"
+  puts "  Example: page_8 => { start_line: 509, end_line: 566, start_sentence: 78 }"
+  exit 0
+end
+
 if page_num.nil?
-  abort "Usage: ruby transcribe.rb --page NUM"
+  abort "Usage: ruby transcribe.rb --page NUM\n       ruby transcribe.rb --list-pages"
 end
 
 transcribe_page(page_num)
