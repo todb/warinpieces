@@ -17,27 +17,41 @@ TEXT_DIR = 'text'
 
 def find_page_headers
   # Find all "WAR AND PEACE" page headers and their line numbers
+  # Handles both spaced and non-spaced variants (WAR AND PEACE vs WARANDPEACE)
   lines = File.readlines(DJVU_FILE)
   headers = []
   lines.each_with_index do |line, idx|
-    if line.match?(/^WAR\s+AND\s+PEACE/)
+    if line.match?(/^WAR\s*AND\s*PEACE/i)
       headers << { line_num: idx + 1, text: line.strip }
     end
   end
   headers
 end
 
-# Page boundaries: page_number => { start_line:, end_line:, start_sentence: }
-# start_line is 1-indexed in the DJVU file
-PAGE_BOUNDARIES = {
-  1 => { start_line: 27, end_line: 52, start_sentence: 1 },
-  2 => { start_line: 53, end_line: 114, start_sentence: 29 },
-  3 => { start_line: 115, end_line: 178, start_sentence: 72 },
-  4 => { start_line: 179, end_line: 240, start_sentence: 117 },
-  5 => { start_line: 241, end_line: 332, start_sentence: 1 },
-  6 => { start_line: 333, end_line: 453, start_sentence: 24 },
-  7 => { start_line: 453, end_line: 507, start_sentence: 56 },
-}
+def get_page_boundaries(page_num)
+  # Get the start and end line numbers for a given page
+  # Page starts after the page header (skip header + blank line)
+  # Page ends before the next page header
+  headers = find_page_headers
+
+  if page_num < 1 || page_num > headers.length
+    abort "Page #{page_num} not found. Available pages: 1-#{headers.length}"
+  end
+
+  # Page starts 2 lines after its header (skip header + blank line)
+  start_line = headers[page_num - 1][:line_num] + 2
+
+  # Page ends 2 lines before the next header (skip blank + next header)
+  if page_num < headers.length
+    end_line = headers[page_num][:line_num] - 2
+  else
+    # Last page goes to end of file
+    end_line = File.readlines(DJVU_FILE).length
+  end
+
+  { start_line: start_line, end_line: end_line }
+end
+
 
 # Sentence splitting rules (as comments for reference)
 RULES = [
@@ -60,10 +74,9 @@ def find_last_sentence_number(filepath)
 end
 
 def extract_page_text(page_num)
-  boundaries = PAGE_BOUNDARIES[page_num]
-  abort "Page #{page_num} not yet configured" unless boundaries
-
+  boundaries = get_page_boundaries(page_num)
   lines = File.readlines(DJVU_FILE)
+
   start_idx = boundaries[:start_line] - 1
   end_idx = boundaries[:end_line] - 1
 
@@ -308,9 +321,6 @@ def split_into_sentences(text)
 end
 
 def transcribe_page(page_num)
-  boundaries = PAGE_BOUNDARIES[page_num]
-  abort "Page #{page_num} not yet configured" unless boundaries
-
   puts "[*] PASS 1: Extracting and cleaning page #{page_num}"
   raw_text = extract_page_text(page_num)
   clean = clean_text(raw_text)
@@ -319,7 +329,7 @@ def transcribe_page(page_num)
   output_file = File.join(TEXT_DIR, sprintf("page-%04d.txt", page_num))
 
   # Determine starting sentence number
-  start_num = boundaries[:start_sentence]
+  start_num = 1  # Default; will be overridden by continuation logic
   if page_num > 1
     # Try to read the last sentence number from the previous page
     prev_page_file = File.join(TEXT_DIR, sprintf("page-%04d.txt", page_num - 1))
@@ -407,8 +417,8 @@ if list_pages
     puts "Line #{header[:line_num]}: #{header[:text]}"
   end
   puts
-  puts "To transcribe a page, add boundaries to PAGE_BOUNDARIES in transcribe.rb:"
-  puts "  Example: page_8 => { start_line: 509, end_line: 566, start_sentence: 78 }"
+  puts "Page boundaries are detected automatically from WAR AND PEACE headers."
+  puts "To transcribe a page: ruby transcribe.rb --page NUM"
   exit 0
 end
 
