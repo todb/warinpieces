@@ -1,0 +1,29 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Utterances that end with elipses (...) end the sentence
+# Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)
+# Sentence boundaries follow terminal punctuation otherwise
+
+56. get away again to her duties as hostess, but Pierre committed the opposite incivility.
+57. Just now he had walked off without listening to the lady who was addressing him:
+58. now he detained by his talk a lady who wanted to get away from him.
+59. With head bent and legs planted wide apart, he began explaining to Anna Pavlovna why he considered the abbe’s scheme chimerical.
+60. ‘We will talk of it later,’ said Anna Pavlovna, smiling.
+61. And getting rid of this unmannerly young man she returned to her duties, keeping her eyes and ears open, ready to fly to the assistance at any point where the conversation was flagging.
+62. Just as the foreman of a spinning-mill settles the work-people in their places, walks up and down the works, and noting any stoppage or unusual creaking or too loud a whir in the spindles, goes up hurriedly, slackens the machinery and sets it going properly, so Anna Pavlovna, walking about her drawing-room, went up to any circle that was pausing or too loud in conversation and by a single word or change of position set the conversational machine going again in its regular, decorous way.
+63. But in the midst of these cares ' a special anxiety on Pierre’s account could still be discerned in her.
+64. She kept an anxious watch on him as he went up to listen to what was being said near Mortemart.
+65. and walked away to another group where the abbe was talking.
+66. Pierre had been educated abroad, and this party at Anna Pavlovna’s was the first at which he had been present in Russia.
+67. He knew all the intellectual lights of Petersburg gathered together here, and his eyes strayed about like a child's in a toy-shop.
+68. He was afraid at every moment of missing some intellectual conversation which he might have heard.
+69. Gazing at the self-confident and refined expressions of the personages assembled here, he was continually expecting something exceptionally clever.
+70. At last he moved up to Abbe Morio.
+71. The conversation seemed interesting, and he stood still waiting for an opportunity of expressing his own ideas, as young people are fond of doing.
+72. • Anna Pavlovna’s soiree was in full swing.
+73. The spindles kept up their regular hum on all sides without pause.
+74. Except the aunt, beside whom was sitting no one but an elderly lady with a thin, careworn face, who seemed rather out of her element in this brilliant society, the company was broken up into three groups.
+75. In one of these, the more masculine, the centre was the abbe; in the other, the group of young people, the chief attractions were the beautiful Princess Ellen, Prince Vassily's daughter, and the little Princess Bolkonsky, with her rosy prettiness, too plump for her years.
+76. In the third group were Mortemart and Anna Pavlovna.
+77. The vicomte was a pretty young gentleman with soft features and manners, who obviously regarded himself as a celebrity, but with goodbreeding modestly allowed the company the benefit of his society.
+78. Anna Pavlovna unmistakably regarded him as the chief entertainment she was s
