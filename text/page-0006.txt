@@ -1,50 +1,40 @@
 # Quoted utterances are sentences
 # Reporting clauses are sentences
 # Utterances that end with elipses (...) end the sentence
-# Otherwise, compound sentences are sentences (em-dashes, semicolons, and the like)
+# Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)
 # Sentence boundaries follow terminal punctuation otherwise
 # See README.md in the source repo for more.
 # Page 6 starts on sentence 24
 
-‘I have brought my work,’ she said, displaying her reticule, and ad¬
-dressing the company generally. ‘Mind, Annette, don’t play me a nasty
-trick,’ she turned to the lady of the house; ‘you wrote to me that it was
-quite a little gathering. See how I am got up.’
-And she flung her arms open to show her elegant grey dress, trimmed
-with lace and girt a little below the bosom with a broad sash.
-‘Never mind, Lise, you will always be prettier than any one else,’
-answered Anna Pavlovna.
-‘You know my husband is deserting me,’ she went on in just the same
-voice, addressing a general; ‘he is going to get himself killed. Tell me
-what this nasty war is for,’ she said to Prince Vassily, and without waiting
-for an answer she turned to Prince Vassily’s daughter, the beautiful Ellen.
-‘How delightful this little princess is! ’ said Prince Vassily in an under¬
-tone to Anna Pavlovna.
-Soon after the little princess, there walked in a massively built, stout
-young man in spectacles, with a cropped head, light breeches in the mode
-of the day, with a high lace ruffle and a ginger-coloured coat. This stout
-young man was the illegitimate son of a celebrated dandy of the days of
-Catherine, Count Bezuhov, who was now dying at Moscow. He had not
-yet entered any branch of the service; he had only just returned from
-abroad, where he had been educated, and this was his first appearance
-in society. Anna Pavlovna greeted him with a nod reserved for persons
-of the very lowest hierarchy in her drawing-room. But, in spite of this
-greeting, Anna Pavlovna’s countenance showed signs on seeing Pierre of
-uneasiness and alarm, such as is shown at the sight of something too big
-and out of place. Though Pierre certainly was somewhat bigger than any
-of the other men in the room, this expression could only have reference
-to the clever, though shy, observant and natural look that distinguished
-him from every one else in the drawing-room.
-‘It is very kind of you, M. Pierre, to have come to see a poor invalid,’
-Anna Pavlovna said to him, exchanging anxious glances with her aunt,
-to whom she was conducting him.
-Pierre murmured something unintelligible, and continued searching
-for something with his eyes. He smiled gleefully and delightedly, bowing
-to the little princess as though she were an intimate friend, and went up
-to the aunt. Anna Pavlovna’s alarm was not without grounds, for Pierre
-walked away from the aunt without waiting to the end of her remarks
-about her majesty’s health. Anna Pavlovna stopped him in dismay with
-the words: ‘You don’t know Abbe Morio? He’s a very interesting man,’
-she said.
-‘Yes, I have heard of his scheme for perpetual peace, and it’s very
-interesting, but hardly possible...'
+24. 'I have brought my work,'
+25. she said, displaying her reticule, and addressing the company generally.
+26. 'Mind, Annette, don't play me a nasty trick,'
+27. she turned to the lady of the house;
+28. 'you wrote to me that it was quite a little gathering.
+29. See how I am got up.'
+30. And she flung her arms open to show her elegant grey dress, trimmed with lace and girt a little below the bosom with a broad sash.
+31. 'Never mind, Lise, you will always be prettier than any one else,'
+32. answered Anna Pavlovna.
+33. 'You know my husband is deserting me,'
+34. she went on in just the same voice, addressing a general;
+35. 'he is going to get himself killed.
+36. Tell me what this nasty war is for,'
+37. she said to Prince Vassily, and without waiting for an answer she turned to Prince Vassily's daughter, the beautiful Ellen.
+38. 'How delightful this little princess is!'
+39. said Prince Vassily in an undertone to Anna Pavlovna.
+40. Soon after the little princess, there walked in a massively built, stout young man in spectacles, with a cropped head, light breeches in the mode of the day, with a high lace ruffle and a ginger-coloured coat.
+41. This stout young man was the illegitimate son of a celebrated dandy of the days of Catherine, Count Bezuhov, who was now dying at Moscow.
+42. He had not yet entered any branch of the service; he had only just returned from abroad, where he had been educated, and this was his first appearance in society.
+43. Anna Pavlovna greeted him with a nod reserved for persons of the very lowest hierarchy in her drawing-room.
+44. But, in spite of this greeting, Anna Pavlovna's countenance showed signs on seeing Pierre of uneasiness and alarm, such as is shown at the sight of something too big and out of place.
+45. Though Pierre certainly was somewhat bigger than any of the other men in the room, this expression could only have reference to the clever, though shy, observant and natural look that distinguished him from every one else in the drawing-room.
+46. 'It is very kind of you, M. Pierre, to have come to see a poor invalid,'
+47. Anna Pavlovna said to him, exchanging anxious glances with her aunt, to whom she was conducting him.
+48. Pierre murmured something unintelligible, and continued searching for something with his eyes.
+49. He smiled gleefully and delightedly, bowing to the little princess as though she were an intimate friend, and went up to the aunt.
+50. Anna Pavlovna's alarm was not without grounds, for Pierre walked away from the aunt without waiting to the end of her remarks about her majesty's health.
+51. Anna Pavlovna stopped him in dismay with the words:
+52. 'You don't know Abbe Morio?
+53. He's a very interesting man,'
+54. she said.
+55. 'Yes, I have heard of his scheme for perpetual peace, and it's very interesting, but hardly possible...'
