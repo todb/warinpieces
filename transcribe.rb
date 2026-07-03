@@ -70,6 +70,49 @@ def clean_text(raw_text)
   text.strip
 end
 
+def fix_quotes_and_reporting_clauses(sentences)
+  # Second pass: look for patterns like "'...,' said X" and split them
+  # Returns a new array with quotes and reporting clauses separated
+
+  result = []
+  reporting_verbs = %w[said asked replied answered continued went on added remarked observed
+                       exclaimed whispered murmured noted cried shouted laughed responded told
+                       called warned concluded recommended explained expressed denied admitted
+                       acknowledged suggested]
+
+  sentences.each do |sentence|
+    # Pattern: 'text,' said ... or "text," said ...
+    # Match: opening_quote, quoted_text, closing_quote+punctuation, verb, rest_of_clause
+
+    match = sentence.match(/^(['"])(.*?\1)([,;.]?\s*)(#{reporting_verbs.join('|')})(.*)$/i)
+
+    if match
+      # Extract parts
+      opening_quote = match[1]
+      quoted_text = match[2]  # This already includes the closing quote!
+      quote_end = match[3]
+      verb = match[4]
+      rest = match[5]
+
+      # Build the quote - quoted_text already has opening quote attached and closing quote
+      # We just need to prepend the opening quote
+      quote_sentence = opening_quote + quoted_text
+
+      # Build the reporting clause (verb + rest of sentence)
+      reporting_sentence = (verb + rest).strip
+
+      # Add both as separate sentences
+      result << quote_sentence
+      result << reporting_sentence
+    else
+      # Keep as-is if no quote/reporting clause pattern found
+      result << sentence
+    end
+  end
+
+  result
+end
+
 def split_into_sentences(text)
   sentences = []
   pos = 0
@@ -79,14 +122,23 @@ def split_into_sentences(text)
     pos += 1 while pos < text.length && text[pos].match?(/\s/)
     break if pos >= text.length
 
-    # Detect quote start
-    if text[pos] == '"' || text[pos] == "'"
-      quote_char = text[pos]
+    # Detect quote start (ASCII or Unicode quotes)
+    quote_char = nil
+    if text[pos] == "'" || text[pos] == "\u{2018}" || text[pos] == "\u{2019}"
+      quote_char = "'"  # Normalize to ASCII single quote for matching
+    elsif text[pos] == '"' || text[pos] == "\u{201C}" || text[pos] == "\u{201D}"
+      quote_char = '"'  # Normalize to ASCII double quote for matching
+    end
+
+    if quote_char
       quote_start = pos
       pos += 1
 
-      # Find closing quote
-      while pos < text.length && text[pos] != quote_char
+      # Find closing quote (match corresponding Unicode or ASCII quote)
+      while pos < text.length
+        c = text[pos]
+        break if ((quote_char == "'" && (c == "'" || c == "\u{2019}")) ||
+                  (quote_char == '"' && (c == '"' || c == "\u{201D}")))
         pos += 1
       end
       pos += 1 if pos < text.length # Include closing quote
@@ -162,33 +214,50 @@ def transcribe_page(page_num)
   boundaries = PAGE_BOUNDARIES[page_num]
   abort "Page #{page_num} not yet configured" unless boundaries
 
-  puts "[*] Extracting page #{page_num} (lines #{boundaries[:start_line]}-#{boundaries[:end_line]})"
+  puts "[*] PASS 1: Extracting and cleaning page #{page_num}"
   raw_text = extract_page_text(page_num)
-
-  puts "[*] Cleaning text"
   clean = clean_text(raw_text)
-
-  puts "[*] Splitting into sentences"
   sentences = split_into_sentences(clean)
 
   output_file = File.join(TEXT_DIR, sprintf("page-%04d.txt", page_num))
   start_num = boundaries[:start_sentence]
-  end_num = start_num + sentences.count - 1
 
-  puts "[*] Writing #{sentences.count} sentences to #{output_file}"
+  # Write first pass
+  puts "[*] Writing first pass (#{sentences.count} sentences)"
   File.open(output_file, 'w') do |f|
     RULES.each { |rule| f.puts rule }
     f.puts
-
     sentences.each_with_index do |sentence, idx|
       num = start_num + idx
       f.puts "#{num}. #{sentence}"
     end
   end
 
+  # Second pass: split quotes from reporting clauses
+  puts "[*] PASS 2: Splitting quotes and reporting clauses"
+  fixed_sentences = fix_quotes_and_reporting_clauses(sentences)
+
+  if fixed_sentences.count != sentences.count
+    puts "[*] Split #{fixed_sentences.count - sentences.count} additional sentences"
+  end
+
+  # Write final version with renumbered sentences
+  final_start = boundaries[:start_sentence]
+  final_end = final_start + fixed_sentences.count - 1
+
+  puts "[*] Writing final version (#{fixed_sentences.count} sentences)"
+  File.open(output_file, 'w') do |f|
+    RULES.each { |rule| f.puts rule }
+    f.puts
+
+    fixed_sentences.each_with_index do |sentence, idx|
+      num = final_start + idx
+      f.puts "#{num}. #{sentence}"
+    end
+  end
+
   puts "[+] Done! Page #{page_num} transcribed successfully."
-  puts "    Sentences #{start_num}-#{end_num}"
-  puts "[*] Open #{output_file} to fix quote/reporting clause splits on second pass."
+  puts "    Final: Sentences #{final_start}-#{final_end}"
 end
 
 # Parse command line
