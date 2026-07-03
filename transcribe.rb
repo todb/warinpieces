@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 #
 # transcribe.rb: Extract and transcribe pages from War and Peace DJVU text
-# Usage: ruby transcribe.rb --page 7
+# Usage: ruby transcribe.rb --page 7 --lines=446-484
 #
 # Handles:
-#   - Extracting raw text from DJVU file by page number
-#   - Cleaning OCR artifacts (hyphenation, spacing)
+#   - Extracting raw text from DJVU file using manual line ranges
+#   - Cleaning OCR artifacts and headers
 #   - Splitting text into sentences per the binding rules
 #   - Numbering sentences correctly across pages
 #   - Writing output to text/page-NNNN.txt
@@ -14,46 +14,6 @@ require 'optparse'
 
 DJVU_FILE = 'warpeace01tols_0_djvu.txt'
 TEXT_DIR = 'text'
-
-def find_page_headers
-  # Find all "WAR AND PEACE" page headers and their line numbers
-  # Handles both spaced and non-spaced variants (WAR AND PEACE vs WARANDPEACE)
-  lines = File.readlines(DJVU_FILE)
-  headers = []
-  lines.each_with_index do |line, idx|
-    if line.match?(/^WAR\s*AND\s*PEACE/i)
-      headers << { line_num: idx + 1, text: line.strip }
-    end
-  end
-  headers
-end
-
-def get_page_boundaries(page_num)
-  # Get the start and end line numbers for a given page
-  # Structure: HEADER + blank + CONTENT + page# + blanks + NEXT_HEADER
-  # So content spans from (header + 2) to (next_header - 6)
-  headers = find_page_headers
-
-  if page_num < 1 || page_num > headers.length
-    abort "Page #{page_num} not found. Available pages: 1-#{headers.length}"
-  end
-
-  # Page starts 2 lines after its header (skip header + blank line)
-  start_line = headers[page_num - 1][:line_num] + 2
-
-  # Page ends before page number and blanks preceding the next header
-  # Structure: content + page_number + blanks + next_header
-  # We want to stop at content (before page number)
-  if page_num < headers.length
-    end_line = headers[page_num][:line_num] - 4
-  else
-    # Last page goes to end of file
-    end_line = File.readlines(DJVU_FILE).length
-  end
-
-  { start_line: start_line, end_line: end_line }
-end
-
 
 # Sentence splitting rules (as comments for reference)
 RULES = [
@@ -75,20 +35,26 @@ def find_last_sentence_number(filepath)
   nil
 end
 
-def extract_page_text(page_num)
-  boundaries = get_page_boundaries(page_num)
+def extract_page_text(start_line, end_line)
+  # Extract text between specified line numbers
+  # Lines are 1-indexed in the file
   lines = File.readlines(DJVU_FILE)
 
-  start_idx = boundaries[:start_line] - 1
-  end_idx = boundaries[:end_line] - 1
+  start_idx = start_line - 1
+  end_idx = end_line - 1
 
   raw_text = lines[start_idx..end_idx].join
   raw_text
 end
 
 def clean_text(raw_text)
-  # Remove page headers (WAR AND PEACE, page numbers, etc.)
-  text = raw_text.sub(/^WAR\s+AND\s+PEACE.*?\n\n/m, '')
+  text = raw_text
+
+  # Remove WAR AND PEACE headers (with optional page numbers)
+  text.gsub!(/^WAR\s*AND\s*PEACE.*?$/i, '')
+
+  # Remove standalone page numbers (just digits on a line)
+  text.gsub!(/^\s*\d+\s*$/, '')
 
   # Preserve chapter markers with unique delimiters that survive space normalization
   # Convert standalone Roman numerals to marker format using brackets
@@ -364,9 +330,9 @@ def split_into_sentences(text)
   sentences.reject { |s| s.empty? }
 end
 
-def transcribe_page(page_num)
+def transcribe_page(page_num, start_line, end_line)
   puts "[*] PASS 1: Extracting and cleaning page #{page_num}"
-  raw_text = extract_page_text(page_num)
+  raw_text = extract_page_text(start_line, end_line)
   clean = clean_text(raw_text)
   sentences = split_into_sentences(clean)
 
@@ -443,31 +409,23 @@ end
 
 # Parse command line
 page_num = nil
-list_pages = false
+start_line = nil
+end_line = nil
 
 OptionParser.new do |opts|
   opts.on('--page NUM', Integer, 'Page number to transcribe') do |num|
     page_num = num
   end
-  opts.on('--list-pages', 'List all page header locations in DJVU') do
-    list_pages = true
+  opts.on('--lines RANGE', 'Line range (e.g., 446-484)') do |range|
+    parts = range.split('-')
+    start_line = parts[0].to_i
+    end_line = parts[1].to_i
   end
 end.parse!
 
-if list_pages
-  puts "Page headers in #{DJVU_FILE}:"
-  puts
-  find_page_headers.each do |header|
-    puts "Line #{header[:line_num]}: #{header[:text]}"
-  end
-  puts
-  puts "Page boundaries are detected automatically from WAR AND PEACE headers."
-  puts "To transcribe a page: ruby transcribe.rb --page NUM"
-  exit 0
+if page_num.nil? || start_line.nil? || end_line.nil?
+  abort "Usage: ruby transcribe.rb --page NUM --lines=START-END\n" +
+        "       Example: ruby transcribe.rb --page 7 --lines=446-484"
 end
 
-if page_num.nil?
-  abort "Usage: ruby transcribe.rb --page NUM\n       ruby transcribe.rb --list-pages"
-end
-
-transcribe_page(page_num)
+transcribe_page(page_num, start_line, end_line)
