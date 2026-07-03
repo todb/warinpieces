@@ -63,8 +63,9 @@ def clean_text(raw_text)
   # Remove page headers (WAR AND PEACE, page numbers, etc.)
   text = raw_text.sub(/^WAR\s+AND\s+PEACE.*?\n\n/m, '')
 
-  # Remove section markers (Roman numerals on their own line)
-  text.gsub!(/^\s*[IVX]+\s*$/, '')
+  # Preserve chapter markers with unique delimiters that survive space normalization
+  # Convert standalone Roman numerals to marker format using brackets
+  text.gsub!(/\n\s*([IVX]+)\s*\n/) { |match| " [[[CHAPTER_#{$1}]]] " }
 
   # Skip leading sentence fragment: find first complete sentence
   # (i.e., skip everything up to and including the first period/! /?)
@@ -105,6 +106,12 @@ def fix_quotes_and_reporting_clauses(sentences)
                        acknowledged suggested]
 
   sentences.each do |sentence|
+    # Skip chapter markers - pass through as-is
+    if sentence.match?(/^__CHAPTER_/)
+      result << sentence
+      next
+    end
+
     # Pattern: 'text,' said ... or "text," said ...
     # Match: opening_quote, quoted_text, closing_quote+punctuation, verb, rest_of_clause
 
@@ -137,14 +144,53 @@ def fix_quotes_and_reporting_clauses(sentences)
   result
 end
 
+def roman_to_arabic(roman)
+  # Convert Roman numerals to Arabic numbers
+  values = { 'I' => 1, 'V' => 5, 'X' => 10, 'L' => 50, 'C' => 100, 'D' => 500, 'M' => 1000 }
+  roman = roman.upcase
+  result = 0
+  prev_value = 0
+
+  roman.each_char.reverse_each do |char|
+    value = values[char]
+    return nil unless value
+    if value < prev_value
+      result -= value
+    else
+      result += value
+    end
+    prev_value = value
+  end
+
+  result > 0 ? result : nil
+end
+
 def split_into_sentences(text)
   sentences = []
   pos = 0
+  current_chapter = nil
 
   while pos < text.length
     # Skip whitespace
     pos += 1 while pos < text.length && text[pos].match?(/\s/)
     break if pos >= text.length
+
+    # Check for chapter marker (preserved from clean_text)
+    # Format: [[[CHAPTER_III]]] (bracket-delimited to survive space normalization)
+    remaining = text[pos..-1]
+    marker_match = remaining.match(/^\[\[\[CHAPTER_([IVX]+)\]\]\]/)
+    if marker_match
+      roman_numeral = marker_match[1]
+      chapter_num = roman_to_arabic(roman_numeral)
+      if chapter_num
+        current_chapter = chapter_num
+        sentences << "__CHAPTER_#{chapter_num}__"
+        pos += marker_match[0].length
+        # Skip trailing space after marker
+        pos += 1 while pos < text.length && text[pos] == ' '
+        next
+      end
+    end
 
     # Detect quote start (all quotes normalized to ASCII in clean_text)
     if text[pos] == "'" || text[pos] == '"'
@@ -203,6 +249,30 @@ def split_into_sentences(text)
     sent_start = pos
 
     while pos < text.length
+      # Check for chapter marker in the middle of text
+      if text[pos..-1].start_with?('[[[CHAPTER_')
+        marker_match = text[pos..-1].match(/^\[\[\[CHAPTER_([IVX]+)\]\]\]/)
+        if marker_match
+          # Emit current sentence if we have one
+          sentence = text[sent_start...pos].strip
+          sentences << sentence if sentence.length > 0
+
+          # Emit chapter marker
+          roman_numeral = marker_match[1]
+          chapter_num = roman_to_arabic(roman_numeral)
+          if chapter_num
+            current_chapter = chapter_num
+            sentences << "__CHAPTER_#{chapter_num}__"
+          end
+
+          pos += marker_match[0].length
+          # Skip whitespace after marker
+          pos += 1 while pos < text.length && text[pos].match?(/\s/)
+          sent_start = pos
+          break
+        end
+      end
+
       # Check for ellipsis
       if pos >= 2 && text[pos-2..pos] == '...'
         pos += 1
@@ -269,23 +339,40 @@ def transcribe_page(page_num)
     puts "[*] Split #{fixed_sentences.count - sentences.count} additional sentences"
   end
 
-  # Write final version with renumbered sentences
-  final_start = boundaries[:start_sentence]
-  final_end = final_start + fixed_sentences.count - 1
+  # Write final version with renumbered sentences and chapter markers
+  puts "[*] Writing final version"
+  chapter_num = nil
 
-  puts "[*] Writing final version (#{fixed_sentences.count} sentences)"
   File.open(output_file, 'w') do |f|
     RULES.each { |rule| f.puts rule }
     f.puts
 
-    fixed_sentences.each_with_index do |sentence, idx|
-      num = final_start + idx
-      f.puts "#{num}. #{sentence}"
+    sentence_num = start_num
+
+    fixed_sentences.each do |sentence|
+      # Check for chapter marker
+      if sentence.match?(/^__CHAPTER_\d+__$/)
+        chapter_num = sentence.match(/\d+/)[0].to_i
+        f.puts "# Chapter #{chapter_num}"
+        sentence_num = 1
+      else
+        f.puts "#{sentence_num}. #{sentence}"
+        sentence_num += 1
+      end
     end
   end
 
+  # Calculate final range accounting for chapters
+  actual_sentences = fixed_sentences.reject { |s| s.match?(/^__CHAPTER_/) }
+  last_num = actual_sentences.count
+
   puts "[+] Done! Page #{page_num} transcribed successfully."
-  puts "    Final: Sentences #{final_start}-#{final_end}"
+  if chapter_num
+    puts "    Contains Chapter #{chapter_num} (restarted numbering)"
+    puts "    Final chapter sentence count: #{last_num}"
+  else
+    puts "    Final: Sentences #{start_num}-#{start_num + actual_sentences.count - 1}"
+  end
 end
 
 # Parse command line
