@@ -15,6 +15,12 @@ require 'optparse'
 DJVU_FILE = 'warpeace01tols_0_djvu.txt'
 TEXT_DIR = 'text'
 
+# Reporting verbs used to detect reporting clauses
+REPORTING_VERBS = %w[said asked replied answered continued went added remarked observed
+                     exclaimed whispered murmured noted cried shouted laughed responded told
+                     called warned concluded recommended explained expressed denied admitted
+                     acknowledged suggested]
+
 # Sentence splitting rules (as comments for reference)
 RULES = [
   "# Quoted utterances are sentences",
@@ -93,10 +99,7 @@ def fix_quotes_and_reporting_clauses(sentences)
   # Returns a new array with quotes and reporting clauses separated
 
   result = []
-  reporting_verbs = %w[said asked replied answered continued went on added remarked observed
-                       exclaimed whispered murmured noted cried shouted laughed responded told
-                       called warned concluded recommended explained expressed denied admitted
-                       acknowledged suggested]
+  verb_pattern = REPORTING_VERBS.join('|')
 
   sentences.each do |sentence|
     # Skip chapter markers - pass through as-is
@@ -108,7 +111,7 @@ def fix_quotes_and_reporting_clauses(sentences)
     # Pattern: 'text,' said ... or "text," said ...
     # Match: opening_quote, quoted_text, closing_quote+punctuation, verb, rest_of_clause
 
-    match = sentence.match(/^(['"])(.*?\1)([,;.]?\s*)(#{reporting_verbs.join('|')})(.*)$/i)
+    match = sentence.match(/^(['"])(.*?\1)([,;.]?\s*)(#{verb_pattern})(.*)$/i)
 
     if match
       # Extract parts
@@ -249,7 +252,8 @@ def split_into_sentences(text)
       if temp_pos < text.length
         # Look for reporting verb
         rest = text[temp_pos..-1]
-        if rest.match?(/^(said|asked|replied|answered|continued|went on|added|remarked|observed|exclaimed|whispered|murmured|noted|cried|shouted|laughed|responded|told|called|warned|concluded|recommended|explained|expressed|denied|admitted|acknowledged|suggested)\b/i)
+        verb_pattern = REPORTING_VERBS.join('|')
+        if rest.match?(/^(#{verb_pattern})\b/i)
           # There's a reporting clause following the quote
           sentences << quote_sentence
           pos = temp_pos
