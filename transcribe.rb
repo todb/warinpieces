@@ -34,6 +34,10 @@ RULES = [
   "# Utterances that end with elipses (...) end the sentence",
   "# Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)",
   "# Sentence boundaries follow terminal punctuation otherwise",
+  "# Line-end hyphenated words (which might be broken with a ¬ or - character) must be rejoined when transcribing per page.",
+  "# Numbering restarts at each chapter start",
+  "# Pages start with the first full complete sentence",
+  "# See README.md in the source repo for more.",
 ]
 
 def find_last_sentence_number(filepath)
