@@ -336,7 +336,7 @@ def transcribe_page(page_num, start_line, end_line)
 
   actual_sentences = fixed_sentences.reject { |s| s.match?(/^__CHAPTER_/) }
 
-  puts "[+] Done! Page #{page_num} transcribed successfully."
+  puts "[+] Done! Page #{page_num} transcribed, more or less. Eyeball it for errors!"
   if chapter_num
     puts "    Contains Chapter #{chapter_num} (restarted numbering)"
     puts "    Final chapter sentence count: #{actual_sentences.count}"
