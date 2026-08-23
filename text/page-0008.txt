@@ -1,0 +1,38 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Utterances that end with elipses (...) end the sentence
+# Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)
+# Sentence boundaries follow terminal punctuation otherwise
+# Line-end hyphenated words (which might be broken with a ¬ or - character) must be rejoined when transcribing per page.
+# Numbering restarts at each chapter start
+# Pages start with the first full complete sentence
+# See README.md in the source repo for more.
+
+8. As a clever maitre d'hotel serves as something superlatively good the piece of beef which no one would have cared to eat seeing it in the dirty kitchen, Anna Pavlovna that evening served up to her guests — first, the vicomte and then the abbe, as something superlatively subtle.
+9. In Mortemart's group the talk turned at once on the execution of the due d'Enghien.
+10. The vicomte said that the due d'Enghien had been lost by his own magnanimity and that there were special reasons for Bonaparte's bitterness again him.
+11. 'Ah, come! Tell us about that, vicomte,'
+12. said Anna Pavlovna gleefully, feeling that the phrase had a peculiarly Louis Quinze note about it: 'Contez-nous cela, vicomte.
+13. ' The vicomte bowed and smiled courteously in token of his readiness to obey. Anna Pavlovna made a circle round the vicomte and invited every one to hear his story. '
+14. The vicomte was personally acquainted with his highness,' Anna Pavlovna whispered to one.
+15. 'The vicomte tells a story perfectly,'
+16. she said to another.
+17. 'How one sees the man of quality,'
+18. she said to a third, and the vicomte was presented to the company in the most elegant and advantageous light, like the roast-beef on the hot dish garnished with green parsley.
+19. The vicomte was about to begin his narrative, and he smiled subtly.
+20. 'Come over here, chore Helene,'
+21. said Anna Pavlovna to the young beauty who was sitting a little way off, the centre of another group.
+22. Princess Ellen smiled.
+23. She got up with the same unchanging smile of the acknowledged beauty with which she had entered the drawing-room.
+24. Her white ball-dress adorned with ivy and moss rustled lightly; her white shoulders, glossy hair, and diamonds glittered, as she passed between the men who moved apart to make way for her.
+25. Not looking directly at any one, but smiling at every one, as it were courteously allowing to all the right to admire the beauty of her figure, her full shoulders, her bosom and back, which were extremely exposed in the mode of the day, she moved up to Anna Pavlovna, seeming to bring with her the brilliance of the ballroom.
+26. Ellen was so lovely that she was not merely free from the slightest shade of coquetry, she seemed on the contrary ashamed of the too evident, too violent and all-conquering influence of her beauty.
+27. She seemed to wish but to be unable to soften the effect of her beauty.
+28. 'What a beautiful woman!'
+29. every one said on seeing her.
+30. As though struck by something extraordinary, the vicomte shrugged his shoulders and dropped his eyes, when she seated herself near him and dazzled him too with the same unchanging smile.
+31. 'Madame, I doubt my abilities before such an audience,'
+32. he said, bowing with a smile.
+33. The princess leaned her plump, bare arm on the table and did not find it necessary to say anything.
+34. She waited, smiling.
+35. During the
