@@ -76,3 +76,10 @@ a few people.
 
 More corner cases will be documented here to bring some semblence of order and predictability of sentences. It's expected that the first time a corner case is encountered, a decision will be made that is binding for the remainder of the text. Hopefully, there will be a manageable number of these cases so these bits of rather arbitrary judgement calls can be easily remembered by future readers and easily encoded by machine transcribers. In no case will prior recordings be amended to account for new parsing rules, as such retrospective editing is likely to add additional years to recording efforts.
 
+### Which colons actually terminate a sentence
+
+"Colons terminate sentences" (above) needs one refinement: a colon only ends a sentence when it introduces a new quoted utterance (as in the page-4 example above, and page 8: `'...about it: 'Contez-nous cela, vicomte.'` splits at the colon). A colon used as a plain connective inside a compound sentence stays joined, exactly like a semicolon or dash - page 7 has `"...addressing him: now he detained..."` as one sentence, never split.
+
+### Terminal punctuation inside an open quote still ends a sentence
+
+A quote can run across more than one sentence before it closes. Terminal punctuation (`. ! ?`) inside it ends a sentence there just like anywhere else - only the piece that actually reaches the closing quote mark keeps it, and a reporting clause after the close is its own sentence as usual. Page 6 (sentences 51-54) is the reference example: `'You don't know Abbe Morio? He's a very interesting man,'` splits into `'You don't know Abbe Morio?` and `He's a very interesting man,'`.

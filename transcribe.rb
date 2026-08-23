@@ -8,7 +8,11 @@
 #   - Cleaning OCR artifacts and headers
 #   - Splitting text into sentences per the binding rules
 #   - Numbering sentences correctly across pages
+#   - Checking the split for rule violations before writing (advisory only)
 #   - Writing output to text/page-NNNN.txt
+#
+# See verify.rb to re-run the rule-violation check (plus an optional
+# word-for-word source diff) against an already-written page.
 
 require 'optparse'
 
@@ -32,7 +36,7 @@ RULES = [
   "# Quoted utterances are sentences",
   "# Reporting clauses are sentences",
   "# Utterances that end with elipses (...) end the sentence",
-  "# Otherwise, compound sentences are sentences (em-dashes, colons, semicolons, and the like)",
+  "# A colon that introduces a new quoted utterance ends the sentence there; other colons (like em-dashes and semicolons) keep a compound sentence as one",
   "# Sentence boundaries follow terminal punctuation otherwise",
   "# Line-end hyphenated words (which might be broken with a ¬ or - character) must be rejoined when transcribing per page.",
   "# Numbering restarts at each chapter start",
@@ -156,29 +160,124 @@ def consume_chapter_marker(sentences, text, pos)
   pos
 end
 
+def absorb_immediate_close(text, pos, quote_char, already_closed)
+  # After a quote-scan segment breaks (on an ellipsis or other terminal
+  # punctuation), check whether the quote's closing mark sits right there
+  # with nothing but more trailing punctuation in between (e.g. an
+  # ellipsis running right up to the close: ". . .'"). If so, absorb it
+  # into this segment instead of leaving it to a separate, quote-less
+  # continuation.
+  return [pos, already_closed] if already_closed
+
+  peek = pos
+  peek += 1 while peek < text.length && text[peek].match?(/[.!?,;]/)
+  return [pos, already_closed] unless peek < text.length && text[peek] == quote_char
+  return [pos, already_closed] if quote_char == "'" && contraction_apostrophe?(text, peek)
+
+  [peek + 1, true]
+end
+
 def consume_quote(sentences, text, pos)
   # Handles a quoted utterance starting at pos, optionally followed by a
   # reporting clause ("she said", "he answered"). Returns the new position.
+  #
+  # A quote can run across more than one sentence before it closes (e.g.
+  # two questions asked in a row before the speaker pauses - page-6
+  # precedent: "'You don't know Abbe Morio? He's a very interesting
+  # man,'"). Terminal punctuation splits those off as their own sentences
+  # just like plain text; only the segment that actually reaches the
+  # closing quote mark keeps it.
   quote_char = text[pos]
   quote_start = pos
   pos += 1
+  closed = false
 
-  while pos < text.length && text[pos] != quote_char
-    pos += 1
-    # A contraction apostrophe (e.g. "don't") inside the quoted text isn't
-    # the closing quote - keep scanning past it.
-    if quote_char == "'" && pos < text.length && text[pos] == quote_char && contraction_apostrophe?(text, pos)
+  while pos < text.length
+    if text[pos] == quote_char
+      # A contraction apostrophe (e.g. "don't") inside the quoted text
+      # isn't the closing quote - keep scanning past it.
+      if quote_char == "'" && contraction_apostrophe?(text, pos)
+        pos += 1
+        next
+      end
       pos += 1
+      closed = true
+      break
     end
+
+    if (ellipsis_len = ellipsis_length_at(text, pos))
+      pos += ellipsis_len
+      break
+    end
+
+    if text[pos].match?(/[.!?]/)
+      pos += 1
+      break
+    end
+
+    pos += 1
   end
-  pos += 1 if pos < text.length # include closing quote
 
-  # Collect trailing punctuation on the quote
-  pos += 1 while pos < text.length && text[pos].match?(/[.!?,;]/)
-
+  pos, closed = absorb_immediate_close(text, pos, quote_char, closed)
   quote_sentence = text[quote_start...pos].strip
 
-  # Look ahead for a reporting clause
+  unless closed
+    sentences << quote_sentence if quote_sentence.length > 0
+    # The quote is still open - the next segment is a continuation of the
+    # same quoted utterance, so it doesn't get its own opening quote mark.
+    return consume_quote_continuation(sentences, text, pos, quote_char)
+  end
+
+  finish_quote(sentences, quote_sentence, text, pos)
+end
+
+def consume_quote_continuation(sentences, text, pos, quote_char)
+  # Consumes the next segment of an already-open quote (see consume_quote)
+  # - no leading quote mark, since we're continuing inside one. Splits at
+  # terminal punctuation same as consume_quote, and recurses if the quote
+  # still hasn't closed by the end of this segment.
+  seg_start = pos
+  closed = false
+
+  while pos < text.length
+    if text[pos] == quote_char
+      if quote_char == "'" && contraction_apostrophe?(text, pos)
+        pos += 1
+        next
+      end
+      pos += 1
+      closed = true
+      break
+    end
+
+    if (ellipsis_len = ellipsis_length_at(text, pos))
+      pos += ellipsis_len
+      break
+    end
+
+    if text[pos].match?(/[.!?]/)
+      pos += 1
+      break
+    end
+
+    pos += 1
+  end
+
+  pos, closed = absorb_immediate_close(text, pos, quote_char, closed)
+  segment = text[seg_start...pos].strip
+
+  unless closed
+    sentences << segment if segment.length > 0
+    return pos < text.length ? consume_quote_continuation(sentences, text, pos, quote_char) : pos
+  end
+
+  finish_quote(sentences, segment, text, pos)
+end
+
+def finish_quote(sentences, quote_sentence, text, pos)
+  # Common tail for consume_quote/consume_quote_continuation once a quote
+  # has actually closed: look ahead for a reporting clause and split it
+  # off as its own sentence, otherwise just record the quote.
   temp_pos = pos
   temp_pos += 1 while temp_pos < text.length && text[temp_pos].match?(/\s/)
 
@@ -188,7 +287,7 @@ def consume_quote(sentences, text, pos)
 
     clause_start = pos
     while pos < text.length
-      if text[pos].match?(/[.!?]/)
+      if terminal_punct?(text, pos)
         pos += 1
         break
       end
@@ -208,6 +307,32 @@ def ellipsis_end?(text, pos)
   # Matches both "..." and the OCR's spaced ". . ." rendering, ending at pos.
   (pos >= 2 && text[pos - 2..pos] == '...') ||
     (pos >= 4 && text[pos - 4..pos].match?(/\. \. \.$/))
+end
+
+def ellipsis_length_at(text, pos)
+  # Forward-looking version of ellipsis_end?, for scanners (like the quote
+  # scanners above) that need to consume a whole "..." / ". . ." as one
+  # unit rather than stopping at its first dot. Returns the match length,
+  # or nil if no ellipsis starts at pos.
+  match = text[pos..-1].match(/\A(?:\.\s*){3}/)
+  match && match[0].length
+end
+
+def colon_introducing_quote?(text, pos)
+  # A colon only terminates a sentence when it introduces a new quoted
+  # utterance (page-4/page-8 precedent: "...begin: 'I often think...'").
+  # A colon used as a plain connective inside a compound sentence stays
+  # joined, like a semicolon or dash (page-7 precedent, sentence 58:
+  # "...addressing him: now he detained..." is never split).
+  return false unless text[pos] == ':'
+
+  lookahead = pos + 1
+  lookahead += 1 while lookahead < text.length && text[lookahead] == ' '
+  lookahead < text.length && text[lookahead].match?(/['"]/)
+end
+
+def terminal_punct?(text, pos)
+  text[pos].match?(/[.!?]/) || colon_introducing_quote?(text, pos)
 end
 
 def consume_plain_sentence(sentences, text, pos)
@@ -233,8 +358,10 @@ def consume_plain_sentence(sentences, text, pos)
       break
     end
 
-    # Terminal punctuation (not colons - they can be in compound sentences)
-    if text[pos].match?(/[.!?]/)
+    # Terminal punctuation, including a colon that introduces a new quote
+    # (see colon_introducing_quote?); a plain connective colon stays part
+    # of a compound sentence.
+    if terminal_punct?(text, pos)
       pos += 1
       break
     end
@@ -288,6 +415,60 @@ def split_into_sentences(text)
   sentences.reject(&:empty?)
 end
 
+def curly_quote_warning(sentence)
+  return nil unless sentence =~ /[‘’“”]/
+  "contains a curly quote/apostrophe (should be straightened to ' or \")"
+end
+
+def idempotent_resplit(texts)
+  # Re-runs the actual splitter on a run of already-split sentence texts
+  # (joined back into one string) and returns what it produces. A split
+  # that already satisfies the current rules is a fixed point of this
+  # process; one that doesn't (a merged sentence, a quote fused with its
+  # reporting clause - the shapes of bug that slipped through on page 8)
+  # comes back different. This is more reliable than inspecting each
+  # sentence in isolation, since a single quoted utterance can legitimately
+  # span several numbered sentences (see text/page-0001.txt sentences 1-4).
+  reconstructed = texts.join(' ')
+  split = split_into_sentences(reconstructed)
+  fix_quotes_and_reporting_clauses(split).reject { |s| s.match?(/^__CHAPTER_/) }
+end
+
+def check_sentence_run(texts)
+  # Runs the idempotency + style checks over one chapter-numbered run of a
+  # page's sentences and returns problems found. Non-blocking - for a
+  # human to eyeball, same as the existing "eyeball it for errors" pass.
+  problems = []
+
+  resplit = idempotent_resplit(texts)
+  if resplit != texts
+    problems << [:resplit_mismatch, texts, resplit]
+  end
+
+  texts.each_with_index do |text, i|
+    warning = curly_quote_warning(text)
+    problems << [:style, i, text, warning] if warning
+  end
+
+  problems
+end
+
+def print_check_problems(problems, start_num)
+  problems.each do |problem|
+    case problem[0]
+    when :resplit_mismatch
+      _, original, resplit = problem
+      puts "[!] Re-splitting these sentences produced a different result - check for a rule violation (merged sentences, or a quote fused with a reporting clause):"
+      puts "    had:  #{original.inspect}"
+      puts "    want: #{resplit.inspect}"
+    when :style
+      _, offset, text, warning = problem
+      puts "[!] Sentence #{start_num + offset}: #{warning}"
+      puts "    #{text}"
+    end
+  end
+end
+
 def transcribe_page(page_num, start_line, end_line)
   puts "[*] PASS 1: Extracting and cleaning page #{page_num}"
   raw_text = extract_page_text(start_line, end_line)
@@ -312,6 +493,26 @@ def transcribe_page(page_num, start_line, end_line)
       end
     end
   end
+
+  puts "[*] PASS 3: Checking for rule violations"
+  any_problems = false
+  run = []
+  run_start_num = start_num
+  fixed_sentences.each do |sentence|
+    if sentence.match?(/^__CHAPTER_\d+__$/)
+      problems = check_sentence_run(run)
+      any_problems ||= !problems.empty?
+      print_check_problems(problems, run_start_num)
+      run = []
+      run_start_num = 1
+      next
+    end
+    run << sentence
+  end
+  problems = check_sentence_run(run)
+  any_problems ||= !problems.empty?
+  print_check_problems(problems, run_start_num)
+  puts "[*] No issues found" unless any_problems
 
   output_file = File.join(TEXT_DIR, sprintf("page-%04d.txt", page_num))
   chapter_num = nil

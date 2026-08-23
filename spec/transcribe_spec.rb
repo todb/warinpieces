@@ -121,20 +121,21 @@ RSpec.describe 'transcribe.rb' do
       expect(split_into_sentences(text)).to eq(["It's a lovely day.", "Don't go."])
     end
 
-    # A quote that opens mid-sentence (after a colon) isn't specially tracked:
-    # the parser only recognizes a quote when it's the first character of a
-    # new sentence. So terminal punctuation *inside* the quoted dialogue ends
-    # the sentence early, and the closing quote mark attaches to whatever
-    # sentence starts next. This matches real source text, e.g. "...with the
-    # words: 'You don't know Abbe Morio?" / "He's a very interesting man,'
-    # she said." (see text/page-0007.txt).
+    # A colon that introduces a quote ends the sentence there (see
+    # colon_introducing_quote?), and a quote that runs across more than one
+    # internal sentence before it closes gets split at each terminal mark
+    # too - only the segment that actually reaches the closing quote keeps
+    # it, and the reporting clause after is its own sentence. This matches
+    # real source text: sentences 51-54 of text/page-0006.txt.
     it 'ends a sentence at terminal punctuation inside a quote opened mid-sentence' do
       text = "Anna Pavlovna stopped him with the words: 'You don't know Abbe Morio? " \
              "He's a very interesting man,' she said."
       sentences = split_into_sentences(text)
       expect(sentences).to eq([
-        "Anna Pavlovna stopped him with the words: 'You don't know Abbe Morio?",
-        "He's a very interesting man,' she said."
+        "Anna Pavlovna stopped him with the words:",
+        "'You don't know Abbe Morio?",
+        "He's a very interesting man,'",
+        "she said."
       ])
     end
 
