@@ -258,6 +258,43 @@ RSpec.describe 'transcribe.rb' do
     end
   end
 
+  describe 'OCR cleanup and abbreviation/dash-aware splitting' do
+    it 'does not split after Mlle. or M.' do
+      text = "He met the actress, Mlle. Georges. Then M. Pierre left."
+      expect(split_into_sentences(text)).to eq([
+        'He met the actress, Mlle. Georges.',
+        'Then M. Pierre left.'
+      ])
+    end
+
+    it 'auto-corrects Mile. and due d\' and reports each fix' do
+      fixed, notes = apply_ocr_fixes("about Mile. Georges and the due d'Enghien")
+      expect(fixed).to eq("about Mlle. Georges and the duc d'Enghien")
+      expect(notes.size).to eq(2)
+    end
+
+    it 'removes stray OCR dash and < marks' do
+      fixed, = apply_ocr_fixes("'And Lise, your wife? - ' 'She is going.' he said. < 'Next.'")
+      expect(fixed).to eq("'And Lise, your wife?' 'She is going.' he said. 'Next.'")
+    end
+
+    it 'restores real hyphens that the line-break rejoin collapses' do
+      expect(clean_text("an aide-de-\ncamp and to-\nday")).to include('aide-de-camp').and include('to-day')
+    end
+
+    it 'lets a dash continue a sentence after ? or !' do
+      expect(split_into_sentences("'The means? — the balance of power,' said the abbe.")).to eq([
+        "'The means? — the balance of power,'",
+        'said the abbe.'
+      ])
+    end
+
+    it 'ends a reporting clause before an interrupting quote' do
+      sentences = split_into_sentences("'Andre,' said his wife, calmly, 'the vicomte has told us a story.'")
+      expect(sentences).to eq(["'Andre,'", 'said his wife, calmly,', "'the vicomte has told us a story.'"])
+    end
+  end
+
   describe '#find_last_sentence_number' do
     it 'returns the number of the last numbered sentence line' do
       Dir.mktmpdir do |dir|

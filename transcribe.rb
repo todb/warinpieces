@@ -62,7 +62,60 @@ def extract_page_text(start_line, end_line)
   lines[(start_line - 1)..(end_line - 1)].join
 end
 
+# OCR junk, removed as [pattern, replacement, message]: stray < / > marks, and
+# a dash between a sentence's end and its closing quote. The latter is the
+# printed trailing-off dash ('And Lise, your wife?-----', page 10); at the end
+# of a sentence it carries no spoken content, so it's dropped. If one turns
+# up mid-sentence, that needs a decision of its own.
+OCR_NOISE = [
+  [/([.!?,])\s+[-–]\s+(?=')/, '\1', 'stray "-" before a closing quote'],
+  [/\s*[<>]\s*/, ' ', 'stray "<" or ">" character'],
+].freeze
+
+# Known OCR misreads of this book's French, auto-corrected. Each is a
+# plausible English word, so a spell-check would never catch them.
+OCR_FIXES = [
+  [/\bdue (?=d')/, 'duc ', '"due d\'..." is "duc d\'..." (OCR reads c as e)'],
+  [/\bMile\.(?= [A-Z])/, 'Mlle.', '"Mile." is "Mlle." (OCR drops an l)'],
+  [/\bMmc\./, 'Mme.', '"Mmc." is "Mme."'],
+].freeze
+
+# Real hyphenated words that the line-end hyphen rejoin below would otherwise
+# collapse (the OCR gives "aide-de-" / "camp"; the book never prints "today").
+KNOWN_HYPHENATED = %w[aide-de-camp to-day to-night to-morrow].freeze
+
+def apply_ocr_fixes(text)
+  # Returns [fixed_text, notes], where notes lists each correction made
+  # (with a count) so the caller can warn about it. Advisory, never fatal.
+  text = text.dup
+  notes = []
+  (OCR_NOISE + OCR_FIXES).each do |pattern, replacement, message|
+    count = text.scan(pattern).size
+    next if count.zero?
+
+    text.gsub!(pattern, replacement)
+    notes << "fixed #{count}x: #{message}"
+  end
+  [text.gsub(/ {2,}/, ' '), notes]
+end
+
+def restore_known_hyphens(text)
+  KNOWN_HYPHENATED.each do |compound|
+    parts = compound.split('-')
+    (1...parts.length).each do |i|
+      # The rejoin drops the hyphen at the line break; try each position.
+      collapsed = parts[0...i].join('-') + parts[i..-1].join('-')
+      text = text.gsub(/\b#{Regexp.escape(collapsed)}\b/i) { |m| compound.sub(/\A./) { m[0] } }
+    end
+  end
+  text
+end
+
 def clean_text(raw_text)
+  normalize_text(raw_text).then { |text| apply_ocr_fixes(text).first }
+end
+
+def normalize_text(raw_text)
   text = raw_text.dup
 
   # Remove WAR AND PEACE headers (with optional page numbers)
@@ -90,6 +143,7 @@ def clean_text(raw_text)
   # The ¬ character (logical not, U+00AC) is how the OCR renders hyphenation.
   text.gsub!(/(\w)¬\s*/, '\1')
   text.gsub!(/(\w)-\s+/, '\1')
+  text = restore_known_hyphens(text)
 
   text.strip
 end
@@ -210,7 +264,7 @@ def consume_quote(sentences, text, pos)
       break
     end
 
-    if text[pos].match?(/[.!?]/)
+    if sentence_end_punct?(text, pos)
       pos += 1
       break
     end
@@ -255,7 +309,7 @@ def consume_quote_continuation(sentences, text, pos, quote_char)
       break
     end
 
-    if text[pos].match?(/[.!?]/)
+    if sentence_end_punct?(text, pos)
       pos += 1
       break
     end
@@ -289,6 +343,14 @@ def finish_quote(sentences, quote_sentence, text, pos)
     while pos < text.length
       if terminal_punct?(text, pos)
         pos += 1
+        break
+      end
+
+      # A reporting clause that ends in a comma and is followed by an opening
+      # quote interrupts the utterance ('Andre,' / said his wife, / 'the
+      # vicomte...'); the clause ends here and the quote is its own sentence.
+      if text[pos].match?(/['"]/) && !contraction_apostrophe?(text, pos) &&
+         text[clause_start...pos].match?(/,\s*\z/)
         break
       end
       pos += 1
@@ -331,8 +393,31 @@ def colon_introducing_quote?(text, pos)
   lookahead < text.length && text[lookahead].match?(/['"]/)
 end
 
+def abbreviation_period?(text, pos)
+  # True if the period at pos belongs to an abbreviation like "Mlle." or
+  # "M. Pierre" (see SPLIT_ABBREVIATIONS), so it doesn't end the sentence.
+  return false unless text[pos] == '.'
+
+  text[0...pos].match?(/(?:\A|[^A-Za-z])(?:#{SPLIT_ABBREVIATIONS.join('|')}|M)\z/)
+end
+
+def dash_continues?(text, pos)
+  # A "?" or "!" followed by a dash doesn't end the sentence: the dash
+  # carries it on, like a semicolon (page 10: "'The means? — the balance of
+  # power in Europe and the rights of the people,'").
+  return false unless text[pos].match?(/[!?]/)
+
+  lookahead = pos + 1
+  lookahead += 1 while lookahead < text.length && text[lookahead] == ' '
+  lookahead < text.length && text[lookahead].match?(/[—–]/)
+end
+
+def sentence_end_punct?(text, pos)
+  text[pos].match?(/[.!?]/) && !abbreviation_period?(text, pos) && !dash_continues?(text, pos)
+end
+
 def terminal_punct?(text, pos)
-  text[pos].match?(/[.!?]/) || colon_introducing_quote?(text, pos)
+  sentence_end_punct?(text, pos) || colon_introducing_quote?(text, pos)
 end
 
 def consume_plain_sentence(sentences, text, pos)
@@ -519,7 +604,8 @@ end
 def transcribe_page(page_num, start_line, end_line)
   puts "[*] PASS 1: Extracting and cleaning page #{page_num}"
   raw_text = extract_page_text(start_line, end_line)
-  clean = clean_text(raw_text)
+  clean, ocr_notes = apply_ocr_fixes(normalize_text(raw_text))
+  ocr_notes.each { |note| puts "[!] OCR cleanup #{note}" }
   sentences = split_into_sentences(clean)
   puts "[*] Split into #{sentences.count} sentences"
 
