@@ -415,6 +415,46 @@ def split_into_sentences(text)
   sentences.reject(&:empty?)
 end
 
+# Abbreviations whose trailing period is not a sentence end. A sentence
+# that ends in one of these was almost certainly split in the wrong place.
+SPLIT_ABBREVIATIONS = %w[Mlle Mlles Mme Mmes Mr Mrs Messrs Dr St Mons Gen Col Capt Lieut Prof]
+SPLIT_ABBREVIATION_PATTERN = /\b(?:#{SPLIT_ABBREVIATIONS.join('|')})\.\z/
+
+# Known OCR misreads of this book's French, as [pattern, message]. Each is
+# a plausible English word, so a spell-check would never catch them.
+OCR_SUSPECTS = [
+  [/\bdue (?=d')/, '"due d\'..." is probably "duc d\'..." (OCR reads c as e)'],
+  [/\bMile\.(?=\s|\z)/, '"Mile." is probably "Mlle." (OCR drops an l)'],
+  [/\bMmc\./, '"Mmc." is probably "Mme."'],
+].freeze
+
+def suspect_sentence_break(text, next_text)
+  # Returns a message if text/next_text look like one sentence that got cut
+  # in two at a period that wasn't a sentence end (e.g. "...the actress,
+  # Mlle." / "Georges, and that there he met..."), otherwise nil.
+  return nil unless next_text
+
+  if text.match?(SPLIT_ABBREVIATION_PATTERN)
+    return 'ends in an abbreviation, so the next sentence is probably its continuation'
+  end
+
+  # A short capitalized word + period followed by "Name, ..." is the shape
+  # of a misread abbreviation (a "Mlle." read as "Mile." escapes the list above).
+  if text.match?(/\b[A-Z][a-z]{1,3}\.\z/) && next_text.match?(/\A[A-Z][a-z]+,/)
+    return 'ends in a short capitalized word and the next sentence opens "Word," - possibly a misread abbreviation'
+  end
+
+  # Only a reporting clause ("said the prince") or the rest of an open
+  # quote starts lowercase, so skip anything quote-adjacent or reporting.
+  if next_text.match?(/\A[a-z]/) &&
+     !text.match?(/\A['"‘“]|['"’”]\z/) &&
+     (next_text.split.first(4) & REPORTING_VERBS).empty?
+    return 'is followed by a sentence that starts lowercase'
+  end
+
+  nil
+end
+
 def curly_quote_warning(sentence)
   return nil unless sentence =~ /[‘’“”]/
   "contains a curly quote/apostrophe (should be straightened to ' or \")"
@@ -448,6 +488,13 @@ def check_sentence_run(texts)
   texts.each_with_index do |text, i|
     warning = curly_quote_warning(text)
     problems << [:style, i, text, warning] if warning
+
+    OCR_SUSPECTS.each do |pattern, message|
+      problems << [:style, i, text, message] if text.match?(pattern)
+    end
+
+    break_warning = suspect_sentence_break(text, texts[i + 1])
+    problems << [:style, i, text, "possible bad sentence split: #{break_warning}"] if break_warning
   end
 
   problems

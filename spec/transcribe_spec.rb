@@ -227,6 +227,37 @@ RSpec.describe 'transcribe.rb' do
     end
   end
 
+  describe '#check_sentence_run (split and OCR heuristics)' do
+    def messages(texts)
+      check_sentence_run(texts).select { |p| p[0] == :style }.map { |p| p[3] }
+    end
+
+    it 'flags a sentence split after an abbreviation like Mlle.' do
+      result = messages(['He met the actress, Mlle.', 'Georges, and that there he met Bonaparte.'])
+      expect(result.join).to include('ends in an abbreviation')
+    end
+
+    it 'flags a misread "Mile." followed by a capitalized "Name,"' do
+      result = messages(['He met the actress, Mile.', 'Georges, and that there he met Bonaparte.'])
+      expect(result.join).to include('"Mile." is probably "Mlle."')
+      expect(result.join).to include('possibly a misread abbreviation')
+    end
+
+    it 'flags "due d\'" as a misread "duc d\'"' do
+      expect(messages(["The execution of the due d'Enghien."]).join).to include('"duc d\'..."')
+      expect(messages(["The execution of the duc d'Enghien."])).to be_empty
+    end
+
+    it 'flags a plain sentence followed by a lowercase continuation' do
+      expect(messages(['He left the room.', 'and never came back.']).join).to include('starts lowercase')
+    end
+
+    it 'does not flag a reporting clause after a quote' do
+      expect(messages(["'Wait for me,'", 'she said.'])).to be_empty
+      expect(messages(["'Come, what are you thinking of?'", 'she said to Prince Ippolit.'])).to be_empty
+    end
+  end
+
   describe '#find_last_sentence_number' do
     it 'returns the number of the last numbered sentence line' do
       Dir.mktmpdir do |dir|
