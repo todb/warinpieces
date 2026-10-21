@@ -74,6 +74,7 @@ end
 puts "[*] Processing #{episode_files.size} audio file(s)"
 
 # Generate descriptions
+first_generated = nil
 episode_files.each do |path|
   filename = File.basename(path)
   match = filename.match(/^(\d+)\.(\d+)\.(\d+)\.(m4a|mp3)$/)
@@ -112,5 +113,18 @@ episode_files.each do |path|
 
   File.open(txt_filename, 'w') do |file|
     file.write(description)
+  end
+
+  first_generated ||= [episode_id, description]
+end
+
+# Copy the first newly generated description to the clipboard (macOS)
+if first_generated
+  episode_id, description = first_generated
+  begin
+    IO.popen('pbcopy', 'w') { |io| io.write(description) }
+    puts "[*] Copied #{episode_id} description to clipboard"
+  rescue Errno::ENOENT
+    warn "[!] pbcopy not found; description not copied to clipboard"
   end
 end
