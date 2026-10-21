@@ -14,16 +14,18 @@ require 'optparse'
 
 # CLI options
 force = false
+process_all = false
 target_episode = nil
 
 OptionParser.new do |opts|
   opts.on('--force', 'Overwrite existing descriptions') { force = true }
+  opts.on('--all', 'Process every chapter, not just the latest recorded one') { process_all = true }
 end.parse!
 
 if ARGV.size == 1
   target_episode = ARGV[0]
 elsif ARGV.size > 1
-  abort "Usage: describe.rb [--force] [part.chapter.sentence]"
+  abort "Usage: credit.rb [--force] [--all] [part.chapter.sentence]"
 end
 
 # Load global config
@@ -60,14 +62,33 @@ DESC
 DESC_DIR = 'descriptions'
 FileUtils.mkdir_p(DESC_DIR)
 
-episode_files = Dir.glob('audio/*').select { |f| f =~ /1\.3\.\d+\.(m4a|mp3)$/i }.sort
+PBCOPY = '/usr/bin/pbcopy' # absolute path: no PATH lookup, no shell
+
+AUDIO_NAME = /\A(\d+)\.(\d+)\.(\d+)\.(m4a|mp3)\z/i
+
+# Sort numerically by part.chapter.sentence (so 1.10.1 follows 1.9.1)
+all_files = Dir.glob('audio/*')
+                .select { |f| File.basename(f) =~ AUDIO_NAME }
+                .sort_by { |f| File.basename(f).match(AUDIO_NAME).captures.first(3).map(&:to_i) }
+abort "No audio files found in audio/" if all_files.empty?
+
+# By default, only work on the chapter of the latest recording
+episode_files = all_files
+unless process_all
+  latest_part, latest_chapter, = File.basename(all_files.last).match(AUDIO_NAME).captures
+  episode_files = all_files.select do |f|
+    part, chapter, = File.basename(f).match(AUDIO_NAME).captures
+    part.to_i == latest_part.to_i && chapter.to_i == latest_chapter.to_i
+  end
+end
 
 if target_episode
   part, chapter, sentence = target_episode.split('.')
   abort "Invalid episode format: #{target_episode}" unless part && chapter && sentence
 
-  pattern = /^#{part}\.#{chapter}\.#{sentence}\.(m4a|mp3)$/i
-  episode_files.select! { |f| File.basename(f) =~ pattern }
+  # An explicit episode may be in any chapter, not just the latest
+  pattern = /\A#{Regexp.escape(part)}\.#{Regexp.escape(chapter)}\.#{Regexp.escape(sentence)}\.(m4a|mp3)\z/i
+  episode_files = all_files.select { |f| File.basename(f) =~ pattern }
   abort "No audio file found for episode #{target_episode}" if episode_files.empty?
 end
 
@@ -122,9 +143,9 @@ end
 if first_generated
   episode_id, description = first_generated
   begin
-    IO.popen('pbcopy', 'w') { |io| io.write(description) }
+    IO.popen([PBCOPY], 'w') { |io| io.write(description) }
     puts "[*] Copied #{episode_id} description to clipboard"
   rescue Errno::ENOENT
-    warn "[!] pbcopy not found; description not copied to clipboard"
+    warn "[!] #{PBCOPY} not found; description not copied to clipboard"
   end
 end
