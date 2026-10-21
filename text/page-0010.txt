@@ -1,0 +1,42 @@
+# Quoted utterances are sentences
+# Reporting clauses are sentences
+# Utterances that end with elipses (...) end the sentence
+# A colon that introduces a new quoted utterance ends the sentence there; other colons (like em-dashes and semicolons) keep a compound sentence as one
+# Sentence boundaries follow terminal punctuation otherwise
+# Line-end hyphenated words (which might be broken with a ¬ or - character) must be rejoined when transcribing per page.
+# Numbering restarts at each chapter start
+# Pages start with the first full complete sentence
+# See README.md in the source repo for more.
+
+71. Pierre had in fact succeeded in getting into a political conversation with the abbe on the balance of power, and the abbe, evidently interested by the simple-hearted fervour of the young man, was unfolding to him his cherished idea.
+72. Both were listening and talking too eagerly and naturally, and Anna Pavlovna did not like it.
+73. 'The means? — the balance of power in Europe and the rights of the people,'
+74. said the abbe.
+75. 'One powerful state like Russia — with the prestige of barbarism — need only take a disinterested stand at the head of the alliance that aims at securing the balance of power in Europe, and it would save the world!'
+76. 'How are you going to get such a balance of power?'
+77. Pierre was beginning; but at that moment Anna Pavlovna came up, and glancing severely at Pierre, asked the Italian how he was supporting the climate.
+78. The Italian's face changed instantly and assumed the look of offensive, affected sweetness, which was evidently its habitual expression in conversation with women.
+79. 'I am so enchanted by the wit and culture of the society — especially of the ladies — in which I have had the happiness to be received, that I have not yet had time to think of the climate,'
+80. he said.
+81. Not letting the abbe and Pierre slip out of her grasp, Anna Pavlovna, for greater convenience in watching them, made them join the bigger group.
+82. At that moment another guest walked into the drawing-room.
+83. This was the young Prince Andrey Bolkonsky, the husband of the little princess.
+84. Prince Bolkonsky was a very handsome young man, of medium height, with clear, clean-cut features.
+85. Everything in his appearance, from his weary, bored expression to his slow, measured step, formed the most striking contrast to his lively little wife.
+86. Obviously all the people in the drawing-room were familiar figures to him, and more than that, he was unmistakably so sick of them that even to look at them and to listen to them was a weariness to him.
+87. Of all the wearisome faces the face of his pretty wife seemed to bore him most.
+88. With a grimace that distorted his handsome face he turned away from her.
+89. He kissed Anna Pavlovna's hand, and with half-closed eyelids scanned the whole company.
+90. 'You are enlisting for the war, prince?'
+91. said Anna Pavlovna.
+92. 'General Kutuzov has been kind enough to have me as an aide-de-camp,'
+93. said Bolkonsky.
+94. 'And Lise, your wife?'
+95. 'She is going into the country.'
+96. 'Isn't it too bad of you to rob us of your charming wife?'
+97. 'Andre,'
+98. said his wife, addressing her husband in exactly the same coquettish tone in which she spoke to outsiders,
+99. 'the vicomte has just told us such a story about Mlle. Georges and Bonaparte!'
+100. Prince Andrey scowled and turned away.
+101. Pierre, who had kept his eyes joyfully and affectionately fixed on him ever since he came in, went up to him and took hold of his arm.
+102. Prince Andrey, without looking round, twisted his face into a grimace of annoyance at any one's touching him, but seeing Pierre's smiling face, he gave him a smile that was unexpectedly sweet and pleasant.
