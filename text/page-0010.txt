@@ -25,7 +25,6 @@
 85. Everything in his appearance, from his weary, bored expression to his slow, measured step, formed the most striking contrast to his lively little wife.
 86. Obviously all the people in the drawing-room were familiar figures to him, and more than that, he was unmistakably so sick of them that even to look at them and to listen to them was a weariness to him.
 87. Of all the wearisome faces the face of his pretty wife seemed to bore him most.
-
 88. With a grimace that distorted his handsome face he turned away from her.
 89. He kissed Anna Pavlovna's hand, and with half-closed eyelids scanned the whole company.
 90. 'You are enlisting for the war, prince?'
@@ -33,6 +32,7 @@
 92. 'General Kutuzov has been kind enough to have me as an aide-de-camp,'
 93. said Bolkonsky.
 94. 'And Lise, your wife?'
+
 95. 'She is going into the country.'
 96. 'Isn't it too bad of you to rob us of your charming wife?'
 97. 'Andre,'
