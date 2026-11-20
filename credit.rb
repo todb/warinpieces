@@ -42,6 +42,9 @@ WEBSITE        = config['website']        || 'https://warinpiec.es'
 episode_reader_map = {}
 if File.exist?(READER_FILE)
   CSV.foreach(READER_FILE, headers: true) do |row|
+    unless row.headers.map { |h| h&.strip } == %w[episode reader]
+      abort "Malformed header in #{READER_FILE}: expected \"episode,reader\", got #{row.headers.inspect}"
+    end
     episode_id = row['episode']&.strip
     reader     = row['reader']&.strip
     episode_reader_map[episode_id] = reader if episode_id && reader
